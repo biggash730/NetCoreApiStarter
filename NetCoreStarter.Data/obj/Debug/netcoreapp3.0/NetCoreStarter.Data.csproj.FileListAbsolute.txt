@@ -1,0 +1,11 @@
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\bin\Debug\netcoreapp3.0\NetCoreStarter.Data.deps.json
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\bin\Debug\netcoreapp3.0\NetCoreStarter.Data.dll
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\bin\Debug\netcoreapp3.0\NetCoreStarter.Data.pdb
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\bin\Debug\netcoreapp3.0\NetCoreStarter.Utils.dll
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\bin\Debug\netcoreapp3.0\NetCoreStarter.Utils.pdb
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\obj\Debug\netcoreapp3.0\NetCoreStarter.Data.csprojAssemblyReference.cache
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\obj\Debug\netcoreapp3.0\NetCoreStarter.Data.AssemblyInfoInputs.cache
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\obj\Debug\netcoreapp3.0\NetCoreStarter.Data.AssemblyInfo.cs
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\obj\Debug\netcoreapp3.0\NetCoreStarter.Data.csproj.CopyComplete
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\obj\Debug\netcoreapp3.0\NetCoreStarter.Data.dll
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Data\obj\Debug\netcoreapp3.0\NetCoreStarter.Data.pdb
