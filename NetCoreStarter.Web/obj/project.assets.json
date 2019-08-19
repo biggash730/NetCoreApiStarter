@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.0": {
+      "Antlr/3.4.1.9004": {
+        "type": "package",
+        "compile": {
+          "lib/Antlr3.Runtime.dll": {}
+        },
+        "runtime": {
+          "lib/Antlr3.Runtime.dll": {}
+        }
+      },
       "EntityFramework/6.2.0": {
         "type": "package",
         "compile": {
@@ -11,6 +20,15 @@
         "runtime": {
           "lib/net45/EntityFramework.SqlServer.dll": {},
           "lib/net45/EntityFramework.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Identity.Core/2.2.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Microsoft.AspNet.Identity.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.AspNet.Identity.Core.dll": {}
         }
       },
       "Microsoft.AspNet.Mvc/5.2.7": {
@@ -58,19 +76,6 @@
         },
         "runtime": {
           "lib/net45/System.Web.Http.dll": {}
-        }
-      },
-      "Microsoft.AspNet.WebApi.WebHost/4.0.20710": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Core": "[4.0.20710, 4.1.0)",
-          "Microsoft.Web.Infrastructure": "1.0.0"
-        },
-        "compile": {
-          "lib/net40/System.Web.Http.WebHost.dll": {}
-        },
-        "runtime": {
-          "lib/net40/System.Web.Http.WebHost.dll": {}
         }
       },
       "Microsoft.AspNet.WebPages/3.2.7": {
@@ -384,6 +389,18 @@
           }
         }
       },
+      "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.4": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.VersionCheckAnalyzer": "[2.9.4]",
+          "Microsoft.CodeQuality.Analyzers": "[2.9.4]",
+          "Microsoft.NetCore.Analyzers": "[2.9.4]",
+          "Microsoft.NetFramework.Analyzers": "[2.9.4]"
+        },
+        "build": {
+          "build/Microsoft.CodeAnalysis.FxCopAnalyzers.props": {}
+        }
+      },
       "Microsoft.CodeAnalysis.Razor/3.0.0-preview8.19405.5": {
         "type": "package",
         "dependencies": {
@@ -396,6 +413,12 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.CodeAnalysis.Razor.dll": {}
+        }
+      },
+      "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.4": {
+        "type": "package",
+        "build": {
+          "build/Microsoft.CodeAnalysis.VersionCheckAnalyzer.props": {}
         }
       },
       "Microsoft.CodeAnalysis.Workspaces.Common/3.2.0-beta1-final": {
@@ -450,6 +473,12 @@
           "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll": {
             "locale": "zh-Hant"
           }
+        }
+      },
+      "Microsoft.CodeQuality.Analyzers/2.9.4": {
+        "type": "package",
+        "build": {
+          "build/Microsoft.CodeQuality.Analyzers.props": {}
         }
       },
       "Microsoft.CSharp/4.6.0-preview8.19405.3": {
@@ -777,6 +806,12 @@
           "lib/netcoreapp3.0/Microsoft.Extensions.Primitives.dll": {}
         }
       },
+      "Microsoft.NetCore.Analyzers/2.9.4": {
+        "type": "package",
+        "build": {
+          "build/Microsoft.NetCore.Analyzers.props": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/2.1.2": {
         "type": "package",
         "compile": {
@@ -793,6 +828,12 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
+        }
+      },
+      "Microsoft.NetFramework.Analyzers/2.9.4": {
+        "type": "package",
+        "build": {
+          "build/Microsoft.NetFramework.Analyzers.props": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration/3.0.0-preview8-19413-06": {
@@ -1231,27 +1272,6 @@
             "assetType": "native",
             "rid": "win-x86"
           }
-        }
-      },
-      "Swashbuckle/5.6.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.WebHost": "4.0.20710",
-          "Swashbuckle.Core": "5.6.0",
-          "WebActivatorEx": "2.0.0"
-        }
-      },
-      "Swashbuckle.Core/5.6.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Core": "4.0.20710",
-          "Newtonsoft.Json": "7.0.1"
-        },
-        "compile": {
-          "lib/net40/Swashbuckle.Core.dll": {}
-        },
-        "runtime": {
-          "lib/net40/Swashbuckle.Core.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -2497,56 +2517,26 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
-      "WebActivatorEx/2.0.0": {
+      "WebGrease/1.6.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Web.Infrastructure": "1.0.0"
+          "Antlr": "3.4.1.9004",
+          "Newtonsoft.Json": "5.0.4"
         },
         "compile": {
-          "lib/net40/WebActivatorEx.dll": {}
+          "lib/WebGrease.dll": {}
         },
         "runtime": {
-          "lib/net40/WebActivatorEx.dll": {}
-        }
-      },
-      "NetCoreStarter.Api/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.0",
-        "dependencies": {
-          "Newtonsoft.Json": "12.0.2",
-          "Swashbuckle": "5.6.0"
-        },
-        "compile": {
-          "bin/placeholder/NetCoreStarter.Api.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/NetCoreStarter.Api.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.AspNetCore.App"
-        ]
-      },
-      "NetCoreStarter.Auth/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.0",
-        "dependencies": {
-          "EntityFramework": "6.2.0",
-          "NetCoreStarter.Data": "1.0.0",
-          "Newtonsoft.Json": "12.0.2"
-        },
-        "compile": {
-          "bin/placeholder/NetCoreStarter.Auth.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/NetCoreStarter.Auth.dll": {}
+          "lib/WebGrease.dll": {}
         }
       },
       "NetCoreStarter.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.0",
         "dependencies": {
-          "EntityFramework": "6.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.2.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.0.0-preview8.19405.11",
+          "NetCoreStarter.Shared": "1.0.0",
           "NetCoreStarter.Utils": "1.0.0",
           "Newtonsoft.Json": "12.0.2"
         },
@@ -2555,6 +2545,21 @@
         },
         "runtime": {
           "bin/placeholder/NetCoreStarter.Data.dll": {}
+        }
+      },
+      "NetCoreStarter.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "dependencies": {
+          "EntityFramework": "6.2.0",
+          "Microsoft.AspNet.Identity.Core": "2.2.2",
+          "Microsoft.EntityFrameworkCore": "2.2.6"
+        },
+        "compile": {
+          "bin/placeholder/NetCoreStarter.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NetCoreStarter.Shared.dll": {}
         }
       },
       "NetCoreStarter.Utils/1.0.0": {
@@ -2577,6 +2582,19 @@
     }
   },
   "libraries": {
+    "Antlr/3.4.1.9004": {
+      "sha512": "c1S+HBE+KYA5EBxtn25LEK02hHPH/tDQ6RviUTTCJpZIPoputtn8ArsQJy9lVJWZOnw37ufByO2Fmf1M8wpr8Q==",
+      "type": "package",
+      "path": "antlr/3.4.1.9004",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "antlr.3.4.1.9004.nupkg.sha512",
+        "antlr.nuspec",
+        "lib/Antlr3.Runtime.dll",
+        "lib/Antlr3.Runtime.pdb"
+      ]
+    },
     "EntityFramework/6.2.0": {
       "sha512": "ptGyXOf26qLrtn+2doAmylIlCxOnBJANwlyyLrXDmqIk9O18IzLWHyxDwwAyhgXkxmbiaA0WNpRy67WRReInBw==",
       "type": "package",
@@ -2605,6 +2623,19 @@
         "tools/init.ps1",
         "tools/install.ps1",
         "tools/migrate.exe"
+      ]
+    },
+    "Microsoft.AspNet.Identity.Core/2.2.2": {
+      "sha512": "aZoXAqqisAQlEdeMwcn204m7ErUeYXJuoZ4YqvV85OPeB0w8o8kW8Ww5o5ZTZFx3mrLmmtfWKjt4nLqfjzjXEw==",
+      "type": "package",
+      "path": "microsoft.aspnet.identity.core/2.2.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Microsoft.AspNet.Identity.Core.dll",
+        "lib/net45/Microsoft.AspNet.Identity.Core.xml",
+        "microsoft.aspnet.identity.core.2.2.2.nupkg.sha512",
+        "microsoft.aspnet.identity.core.nuspec"
       ]
     },
     "Microsoft.AspNet.Mvc/5.2.7": {
@@ -2664,19 +2695,6 @@
         "lib/net45/System.Web.Http.xml",
         "microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512",
         "microsoft.aspnet.webapi.core.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.WebApi.WebHost/4.0.20710": {
-      "sha512": "Pqje5F4BJvnN6z2eSIuyCCZNJbIPap/4bYfvvHYy/kiYPj7+cFK+tgcSKWgITwk+6K8v+Bf3Et16DXQQuK+wEg==",
-      "type": "package",
-      "path": "microsoft.aspnet.webapi.webhost/4.0.20710",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net40/System.Web.Http.WebHost.dll",
-        "lib/net40/System.Web.Http.WebHost.xml",
-        "microsoft.aspnet.webapi.webhost.4.0.20710.nupkg.sha512",
-        "microsoft.aspnet.webapi.webhost.nuspec"
       ]
     },
     "Microsoft.AspNet.WebPages/3.2.7": {
@@ -3014,6 +3032,62 @@
         "microsoft.codeanalysis.csharp.workspaces.nuspec"
       ]
     },
+    "Microsoft.CodeAnalysis.FxCopAnalyzers/2.9.4": {
+      "sha512": "Hq8ubc3mgNElouL7+nYqUfrgtH0s5F8UUdicBnjr72DSPKC/bQMU8lpySQ3Hog7JU7SyblFfpJR3VMgNFTzcww==",
+      "type": "package",
+      "path": "microsoft.codeanalysis.fxcopanalyzers/2.9.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.rtf",
+        "build/Microsoft.CodeAnalysis.FxCopAnalyzers.props",
+        "documentation/Microsoft.CodeAnalysis.FxCopAnalyzers.md",
+        "documentation/Microsoft.CodeAnalysis.FxCopAnalyzers.sarif",
+        "microsoft.codeanalysis.fxcopanalyzers.2.9.4.nupkg.sha512",
+        "microsoft.codeanalysis.fxcopanalyzers.nuspec",
+        "rulesets/AllRulesDefault.ruleset",
+        "rulesets/AllRulesDisabled.ruleset",
+        "rulesets/AllRulesEnabled.ruleset",
+        "rulesets/DataflowRulesDefault.ruleset",
+        "rulesets/DataflowRulesEnabled.ruleset",
+        "rulesets/DesignRulesDefault.ruleset",
+        "rulesets/DesignRulesEnabled.ruleset",
+        "rulesets/DocumentationRulesDefault.ruleset",
+        "rulesets/DocumentationRulesEnabled.ruleset",
+        "rulesets/GlobalizationRulesDefault.ruleset",
+        "rulesets/GlobalizationRulesEnabled.ruleset",
+        "rulesets/InteroperabilityRulesDefault.ruleset",
+        "rulesets/InteroperabilityRulesEnabled.ruleset",
+        "rulesets/MaintainabilityRulesDefault.ruleset",
+        "rulesets/MaintainabilityRulesEnabled.ruleset",
+        "rulesets/NamingRulesDefault.ruleset",
+        "rulesets/NamingRulesEnabled.ruleset",
+        "rulesets/PerformanceRulesDefault.ruleset",
+        "rulesets/PerformanceRulesEnabled.ruleset",
+        "rulesets/PortedFromFxCopRulesDefault.ruleset",
+        "rulesets/PortedFromFxCopRulesEnabled.ruleset",
+        "rulesets/ReliabilityRulesDefault.ruleset",
+        "rulesets/ReliabilityRulesEnabled.ruleset",
+        "rulesets/SecurityRulesDefault.ruleset",
+        "rulesets/SecurityRulesEnabled.ruleset",
+        "rulesets/UsageRulesDefault.ruleset",
+        "rulesets/UsageRulesEnabled.ruleset",
+        "rulesets/legacy/AllRules.ruleset",
+        "rulesets/legacy/BasicCorrectnessRules.ruleset",
+        "rulesets/legacy/BasicDesignGuidelineRules.ruleset",
+        "rulesets/legacy/ExtendedCorrectnessRules.ruleset",
+        "rulesets/legacy/ExtendedDesignGuidelineRules.ruleset",
+        "rulesets/legacy/GlobalizationRules.ruleset",
+        "rulesets/legacy/ManagedMinimumRules.ruleset",
+        "rulesets/legacy/MinimumRecommendedRules.ruleset",
+        "rulesets/legacy/Sdl-7.1.Recommended.ruleset",
+        "rulesets/legacy/Sdl-7.1.Required.ruleset",
+        "rulesets/legacy/SecurityRules.ruleset",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
     "Microsoft.CodeAnalysis.Razor/3.0.0-preview8.19405.5": {
       "sha512": "bZShafbMHnwDrKtIaIdJl1lJiSo3hKSATTeHaEU+cpl4p+bbaEM5nm4AFJBLR8JfVrY4D1BtaGK72RmzaGMTnA==",
       "type": "package",
@@ -3025,6 +3099,47 @@
         "lib/netstandard2.0/Microsoft.CodeAnalysis.Razor.xml",
         "microsoft.codeanalysis.razor.3.0.0-preview8.19405.5.nupkg.sha512",
         "microsoft.codeanalysis.razor.nuspec"
+      ]
+    },
+    "Microsoft.CodeAnalysis.VersionCheckAnalyzer/2.9.4": {
+      "sha512": "vKZIF7bNEOwaHvS163bdmq9zcpcN4ve2hXEacoeeeGGYClo8/YqM1iMYnsTdWtcXZj7VT9SvwhkIapjkjGM3OQ==",
+      "type": "package",
+      "path": "microsoft.codeanalysis.versioncheckanalyzer/2.9.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.rtf",
+        "analyzers/dotnet/Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll",
+        "analyzers/dotnet/cs/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/de/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/es/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/fr/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/it/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/ja/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/ko/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/pl/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/pt-BR/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/ru/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/tr/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/zh-Hans/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "analyzers/dotnet/zh-Hant/Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll",
+        "build/Microsoft.CodeAnalysis.VersionCheckAnalyzer.props",
+        "documentation/Microsoft.CodeAnalysis.VersionCheckAnalyzer.md",
+        "documentation/Microsoft.CodeAnalysis.VersionCheckAnalyzer.sarif",
+        "microsoft.codeanalysis.versioncheckanalyzer.2.9.4.nupkg.sha512",
+        "microsoft.codeanalysis.versioncheckanalyzer.nuspec",
+        "rulesets/AllRulesDefault.ruleset",
+        "rulesets/AllRulesDisabled.ruleset",
+        "rulesets/AllRulesEnabled.ruleset",
+        "rulesets/DataflowRulesDefault.ruleset",
+        "rulesets/DataflowRulesEnabled.ruleset",
+        "rulesets/PortedFromFxCopRulesDefault.ruleset",
+        "rulesets/PortedFromFxCopRulesEnabled.ruleset",
+        "rulesets/ReliabilityRulesDefault.ruleset",
+        "rulesets/ReliabilityRulesEnabled.ruleset",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "Microsoft.CodeAnalysis.Workspaces.Common/3.2.0-beta1-final": {
@@ -3052,6 +3167,79 @@
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "microsoft.codeanalysis.workspaces.common.3.2.0-beta1-final.nupkg.sha512",
         "microsoft.codeanalysis.workspaces.common.nuspec"
+      ]
+    },
+    "Microsoft.CodeQuality.Analyzers/2.9.4": {
+      "sha512": "+uoxsrXJ27SYXjGcXTGHwLqjC3pXe6NEDUUGv1uCWtgl7kLMHmqqPA/3zAy/H2OhU/Zq9XrYEABYXNiLUqLjMA==",
+      "type": "package",
+      "path": "microsoft.codequality.analyzers/2.9.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.rtf",
+        "analyzers/dotnet/cs/Humanizer.dll",
+        "analyzers/dotnet/cs/Microsoft.CodeQuality.Analyzers.dll",
+        "analyzers/dotnet/cs/Microsoft.CodeQuality.CSharp.Analyzers.dll",
+        "analyzers/dotnet/cs/cs/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/de/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/es/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/fr/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/it/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ja/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ko/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/pl/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/pt-BR/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ru/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/tr/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/zh-Hans/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/zh-Hant/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/Humanizer.dll",
+        "analyzers/dotnet/vb/Microsoft.CodeQuality.Analyzers.dll",
+        "analyzers/dotnet/vb/Microsoft.CodeQuality.VisualBasic.Analyzers.dll",
+        "analyzers/dotnet/vb/cs/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/de/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/es/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/fr/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/it/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ja/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ko/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/pl/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/pt-BR/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ru/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/tr/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/zh-Hans/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/zh-Hant/Microsoft.CodeQuality.Analyzers.resources.dll",
+        "build/Microsoft.CodeQuality.Analyzers.props",
+        "documentation/Microsoft.CodeQuality.Analyzers.md",
+        "documentation/Microsoft.CodeQuality.Analyzers.sarif",
+        "microsoft.codequality.analyzers.2.9.4.nupkg.sha512",
+        "microsoft.codequality.analyzers.nuspec",
+        "rulesets/AllRulesDefault.ruleset",
+        "rulesets/AllRulesDisabled.ruleset",
+        "rulesets/AllRulesEnabled.ruleset",
+        "rulesets/DataflowRulesDefault.ruleset",
+        "rulesets/DataflowRulesEnabled.ruleset",
+        "rulesets/DesignRulesDefault.ruleset",
+        "rulesets/DesignRulesEnabled.ruleset",
+        "rulesets/DocumentationRulesDefault.ruleset",
+        "rulesets/DocumentationRulesEnabled.ruleset",
+        "rulesets/MaintainabilityRulesDefault.ruleset",
+        "rulesets/MaintainabilityRulesEnabled.ruleset",
+        "rulesets/NamingRulesDefault.ruleset",
+        "rulesets/NamingRulesEnabled.ruleset",
+        "rulesets/PerformanceRulesDefault.ruleset",
+        "rulesets/PerformanceRulesEnabled.ruleset",
+        "rulesets/PortedFromFxCopRulesDefault.ruleset",
+        "rulesets/PortedFromFxCopRulesEnabled.ruleset",
+        "rulesets/ReliabilityRulesDefault.ruleset",
+        "rulesets/ReliabilityRulesEnabled.ruleset",
+        "rulesets/SecurityRulesDefault.ruleset",
+        "rulesets/SecurityRulesEnabled.ruleset",
+        "rulesets/UsageRulesDefault.ruleset",
+        "rulesets/UsageRulesEnabled.ruleset",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "Microsoft.CSharp/4.6.0-preview8.19405.3": {
@@ -3468,6 +3656,73 @@
         "microsoft.extensions.primitives.nuspec"
       ]
     },
+    "Microsoft.NetCore.Analyzers/2.9.4": {
+      "sha512": "WF0/qmG4cgMA7bl+82OfAW+DH7Qo3Np72ocK8Qr8eTyg5ZPEPonDLL0doZz29o2DF0bUht5t84lDccy+vIhXxQ==",
+      "type": "package",
+      "path": "microsoft.netcore.analyzers/2.9.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.rtf",
+        "analyzers/dotnet/cs/Microsoft.NetCore.Analyzers.dll",
+        "analyzers/dotnet/cs/Microsoft.NetCore.CSharp.Analyzers.dll",
+        "analyzers/dotnet/cs/cs/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/de/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/es/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/fr/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/it/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ja/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ko/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/pl/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/pt-BR/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ru/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/tr/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/zh-Hans/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/zh-Hant/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/Microsoft.NetCore.Analyzers.dll",
+        "analyzers/dotnet/vb/Microsoft.NetCore.VisualBasic.Analyzers.dll",
+        "analyzers/dotnet/vb/cs/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/de/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/es/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/fr/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/it/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ja/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ko/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/pl/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/pt-BR/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ru/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/tr/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/zh-Hans/Microsoft.NetCore.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/zh-Hant/Microsoft.NetCore.Analyzers.resources.dll",
+        "build/Microsoft.NetCore.Analyzers.props",
+        "documentation/Microsoft.NetCore.Analyzers.md",
+        "documentation/Microsoft.NetCore.Analyzers.sarif",
+        "microsoft.netcore.analyzers.2.9.4.nupkg.sha512",
+        "microsoft.netcore.analyzers.nuspec",
+        "rulesets/AllRulesDefault.ruleset",
+        "rulesets/AllRulesDisabled.ruleset",
+        "rulesets/AllRulesEnabled.ruleset",
+        "rulesets/DataflowRulesDefault.ruleset",
+        "rulesets/DataflowRulesEnabled.ruleset",
+        "rulesets/GlobalizationRulesDefault.ruleset",
+        "rulesets/GlobalizationRulesEnabled.ruleset",
+        "rulesets/InteroperabilityRulesDefault.ruleset",
+        "rulesets/InteroperabilityRulesEnabled.ruleset",
+        "rulesets/PerformanceRulesDefault.ruleset",
+        "rulesets/PerformanceRulesEnabled.ruleset",
+        "rulesets/PortedFromFxCopRulesDefault.ruleset",
+        "rulesets/PortedFromFxCopRulesEnabled.ruleset",
+        "rulesets/ReliabilityRulesDefault.ruleset",
+        "rulesets/ReliabilityRulesEnabled.ruleset",
+        "rulesets/SecurityRulesDefault.ruleset",
+        "rulesets/SecurityRulesEnabled.ruleset",
+        "rulesets/UsageRulesDefault.ruleset",
+        "rulesets/UsageRulesEnabled.ruleset",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
     "Microsoft.NETCore.Platforms/2.1.2": {
       "sha512": "mOJy3M0UN+LUG21dLGMxaWZEP6xYpQEpLuvuEQBaownaX4YuhH6NmNUlN9si+vNkAS6dwJ//N1O4DmLf2CikVg==",
       "type": "package",
@@ -3498,6 +3753,65 @@
         "microsoft.netcore.targets.1.1.0.nupkg.sha512",
         "microsoft.netcore.targets.nuspec",
         "runtime.json"
+      ]
+    },
+    "Microsoft.NetFramework.Analyzers/2.9.4": {
+      "sha512": "xH1wQgNCIMmDWn1Y0ppu0hLqD+xexU4sygsLMIqpro9S7g+l1fBiDKuIq5dEIUmKetseyj/DLXn/ymfF5CKgBQ==",
+      "type": "package",
+      "path": "microsoft.netframework.analyzers/2.9.4",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.rtf",
+        "analyzers/dotnet/cs/Microsoft.NetFramework.Analyzers.dll",
+        "analyzers/dotnet/cs/Microsoft.NetFramework.CSharp.Analyzers.dll",
+        "analyzers/dotnet/cs/cs/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/de/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/es/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/fr/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/it/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ja/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ko/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/pl/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/pt-BR/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/ru/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/tr/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/zh-Hans/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/cs/zh-Hant/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/Microsoft.NetFramework.Analyzers.dll",
+        "analyzers/dotnet/vb/Microsoft.NetFramework.VisualBasic.Analyzers.dll",
+        "analyzers/dotnet/vb/cs/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/de/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/es/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/fr/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/it/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ja/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ko/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/pl/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/pt-BR/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/ru/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/tr/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/zh-Hans/Microsoft.NetFramework.Analyzers.resources.dll",
+        "analyzers/dotnet/vb/zh-Hant/Microsoft.NetFramework.Analyzers.resources.dll",
+        "build/Microsoft.NetFramework.Analyzers.props",
+        "documentation/Microsoft.NetFramework.Analyzers.md",
+        "documentation/Microsoft.NetFramework.Analyzers.sarif",
+        "microsoft.netframework.analyzers.2.9.4.nupkg.sha512",
+        "microsoft.netframework.analyzers.nuspec",
+        "rulesets/AllRulesDefault.ruleset",
+        "rulesets/AllRulesDisabled.ruleset",
+        "rulesets/AllRulesEnabled.ruleset",
+        "rulesets/DataflowRulesDefault.ruleset",
+        "rulesets/DataflowRulesEnabled.ruleset",
+        "rulesets/DesignRulesDefault.ruleset",
+        "rulesets/DesignRulesEnabled.ruleset",
+        "rulesets/PortedFromFxCopRulesDefault.ruleset",
+        "rulesets/PortedFromFxCopRulesEnabled.ruleset",
+        "rulesets/SecurityRulesDefault.ruleset",
+        "rulesets/SecurityRulesEnabled.ruleset",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration/3.0.0-preview8-19413-06": {
@@ -4335,30 +4649,6 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
-      ]
-    },
-    "Swashbuckle/5.6.0": {
-      "sha512": "UAE91ynpgvwoUs8igq3k/D0HV+cHrGRGJR9cwIPGE08hHJenn24MR2vq1n6NYbDWEwAVm+RYUW+qIsO9p5Sn/Q==",
-      "type": "package",
-      "path": "swashbuckle/5.6.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Content/App_Start/SwaggerConfig.cs.pp",
-        "swashbuckle.5.6.0.nupkg.sha512",
-        "swashbuckle.nuspec"
-      ]
-    },
-    "Swashbuckle.Core/5.6.0": {
-      "sha512": "GhVWgtB8hCOxQhx7zLiiRyoi6flm7fNDDGILYHWktxLMkykRUz90fhmLRZECmnbvCcepFyROiw3phS1XorhdDg==",
-      "type": "package",
-      "path": "swashbuckle.core/5.6.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net40/Swashbuckle.Core.dll",
-        "swashbuckle.core.5.6.0.nupkg.sha512",
-        "swashbuckle.core.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -7935,32 +8225,29 @@
         "system.xml.xdocument.nuspec"
       ]
     },
-    "WebActivatorEx/2.0.0": {
-      "sha512": "B3ZbOEaGCqa7BLjZZw6wqprOJJMvP39h7Lr5ADkJOCPKHppAaCre34kR63/gfgpM4htzTfgm/pEw7r7qqqMgIA==",
+    "WebGrease/1.6.0": {
+      "sha512": "1d29edoh4IZPLig82coowiPBS1ltxT97PwEIkOk0dHqtJwD9v5C7gPm6Ot1hKHT86otKm04oDQ00x5c+PyVyxw==",
       "type": "package",
-      "path": "webactivatorex/2.0.0",
+      "path": "webgrease/1.6.0",
+      "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/net40/WebActivatorEx.dll",
-        "webactivatorex.2.0.0.nupkg.sha512",
-        "webactivatorex.nuspec"
+        "lib/WebGrease.dll",
+        "tools/WG.EXE",
+        "webgrease.1.6.0.nupkg.sha512",
+        "webgrease.nuspec"
       ]
-    },
-    "NetCoreStarter.Api/1.0.0": {
-      "type": "project",
-      "path": "../NetCoreStarter.Api/NetCoreStarter.Api.csproj",
-      "msbuildProject": "../NetCoreStarter.Api/NetCoreStarter.Api.csproj"
-    },
-    "NetCoreStarter.Auth/1.0.0": {
-      "type": "project",
-      "path": "../NetCoreStarter.Auth/NetCoreStarter.Auth.csproj",
-      "msbuildProject": "../NetCoreStarter.Auth/NetCoreStarter.Auth.csproj"
     },
     "NetCoreStarter.Data/1.0.0": {
       "type": "project",
       "path": "../NetCoreStarter.Data/NetCoreStarter.Data.csproj",
       "msbuildProject": "../NetCoreStarter.Data/NetCoreStarter.Data.csproj"
+    },
+    "NetCoreStarter.Shared/1.0.0": {
+      "type": "project",
+      "path": "../NetCoreStarter.Shared/NetCoreStarter.Shared.csproj",
+      "msbuildProject": "../NetCoreStarter.Shared/NetCoreStarter.Shared.csproj"
     },
     "NetCoreStarter.Utils/1.0.0": {
       "type": "project",
@@ -7973,14 +8260,14 @@
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 3.0.0-preview8.19405.7",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.0.0-preview8.19405.7",
       "Microsoft.AspNetCore.Identity.UI >= 3.0.0-preview8.19405.7",
+      "Microsoft.CodeAnalysis.FxCopAnalyzers >= 2.9.4",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.0.0-preview8.19405.11",
       "Microsoft.EntityFrameworkCore.Tools >= 3.0.0-preview8.19405.11",
       "Microsoft.Extensions.Logging.Debug >= 3.0.0-preview8.19405.4",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.0.0-preview8-19413-06",
-      "NetCoreStarter.Api >= 1.0.0",
-      "NetCoreStarter.Auth >= 1.0.0",
       "NetCoreStarter.Data >= 1.0.0",
-      "NetCoreStarter.Utils >= 1.0.0"
+      "NetCoreStarter.Shared >= 1.0.0",
+      "WebGrease >= 1.6.0"
     ]
   },
   "packageFolders": {
@@ -8013,17 +8300,11 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Api\\NetCoreStarter.Api.csproj": {
-              "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Api\\NetCoreStarter.Api.csproj"
-            },
-            "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Auth\\NetCoreStarter.Auth.csproj": {
-              "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Auth\\NetCoreStarter.Auth.csproj"
-            },
             "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Data\\NetCoreStarter.Data.csproj": {
               "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Data\\NetCoreStarter.Data.csproj"
             },
-            "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj": {
-              "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj"
+            "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj": {
+              "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj"
             }
           }
         }
@@ -8049,6 +8330,12 @@
             "target": "Package",
             "version": "[3.0.0-preview8.19405.7, )"
           },
+          "Microsoft.CodeAnalysis.FxCopAnalyzers": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[2.9.4, )"
+          },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[3.0.0-preview8.19405.11, )"
@@ -8064,6 +8351,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[3.0.0-preview8-19413-06, )"
+          },
+          "WebGrease": {
+            "target": "Package",
+            "version": "[1.6.0, )"
           }
         },
         "imports": [
@@ -8093,8 +8384,28 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
+      "message": "Package 'Antlr 3.4.1.9004' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Antlr",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
       "message": "Package 'EntityFramework 6.2.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
       "libraryId": "EntityFramework",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Identity.Core 2.2.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Identity.Core",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.0"
       ]
@@ -8133,16 +8444,6 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebApi.WebHost 4.0.20710' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.WebApi.WebHost",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
       "message": "Package 'Microsoft.AspNet.WebPages 3.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.WebPages",
       "targetGraphs": [
@@ -8163,27 +8464,8 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Swashbuckle.Core 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Swashbuckle.Core",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.0"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'WebActivatorEx 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
-      "libraryId": "WebActivatorEx",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.0"
-      ]
-    },
-    {
-      "code": "NU1107",
-      "level": "Error",
-      "message": "Version conflict detected for Microsoft.AspNet.WebApi.Core. Install/reference Microsoft.AspNet.WebApi.Core 5.2.7 directly to project NetCoreStarter.Web to resolve this issue. \r\n NetCoreStarter.Web -> NetCoreStarter.Utils -> Microsoft.AspNet.WebApi.Core (>= 5.2.7) \r\n NetCoreStarter.Web -> NetCoreStarter.Api -> Swashbuckle 5.6.0 -> Microsoft.AspNet.WebApi.WebHost 4.0.20710 -> Microsoft.AspNet.WebApi.Core (>= 4.0.20710 && < 4.1.0).",
-      "libraryId": "Microsoft.AspNet.WebApi.Core",
+      "message": "Package 'WebGrease 1.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
+      "libraryId": "WebGrease",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.0"
       ]

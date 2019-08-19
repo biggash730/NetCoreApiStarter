@@ -17,12 +17,13 @@ namespace NetCoreStarter.Utils
         //permissions on systems configuration
         public const string CanViewDashboard = "CanViewDashboard";
         public const string CanViewReports = "CanViewReports";
-        public const string CanViewSetting = "CanViewSetting";
+        public const string CanViewSettings = "CanViewSettings";
 
     }
 
     public class GenericProperties
     {
+        public const string Privilege = "Privilege";
         public const string CreatedBy = "CreatedBy";
         public const string CreatedAt = "CreatedAt";
         public const string ModifiedAt = "ModifiedAt";

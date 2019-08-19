@@ -1,0 +1,19 @@
+{
+  "PasswordPolicies": {
+    "MinimumLength": 8,
+    "RequireNonLetterOrDigit": true,
+    "RequireDigit": true,
+    "RequireLowercase": true,
+    "RequireUppercase": true,
+    "RequiredUniqueChars": 1,
+    "SpecialCharacters": "?!@#$%^&*",
+    "PreviousPasswordCount": 5
+  },
+  "MessageService": {
+    "SenderId": "NetCore",
+    "BaseUrl": "http://bluma.azurewebsites.net/",
+    "SendMessageUrl": "api/sendmessages",
+    "CheckBalanceUrl": "api/checkbalance",
+    "ApiKey": ""
+  }
+}

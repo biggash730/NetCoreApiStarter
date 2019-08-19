@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace NetCoreStarter3
+namespace NetCoreStarter.Web
 {
     public class Program
     {

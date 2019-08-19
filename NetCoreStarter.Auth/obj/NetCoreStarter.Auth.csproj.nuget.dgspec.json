@@ -45,10 +45,6 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
-            "EntityFramework": {
-              "target": "Package",
-              "version": "[6.2.0, )"
-            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.2, )"
@@ -99,6 +95,9 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
+              "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj": {
+                "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj"
+              },
               "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj": {
                 "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj"
               }
@@ -114,17 +113,86 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
-            "EntityFramework": {
-              "target": "Package",
-              "version": "[6.2.0, )"
-            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.11, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview8-013656\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj",
+        "projectName": "NetCoreStarter.Shared",
+        "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj",
+        "packagesPath": "C:\\Users\\Francis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Francis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.2.0, )"
+            },
+            "Microsoft.AspNet.Identity.Core": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.6, )"
             }
           },
           "imports": [
