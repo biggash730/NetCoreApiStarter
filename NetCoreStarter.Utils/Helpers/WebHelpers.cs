@@ -6,7 +6,6 @@ using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Web.Mvc;
 
 namespace NetCoreStarter.Utils.Helpers
@@ -124,4 +123,5 @@ namespace NetCoreStarter.Utils.Helpers
             return BuildResponse(HttpStatusCode.BadRequest, null, msg, 0);
         }
     }
+
 }

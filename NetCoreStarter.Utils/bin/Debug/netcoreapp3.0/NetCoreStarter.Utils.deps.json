@@ -12,6 +12,7 @@
           "Microsoft.AspNet.Mvc": "5.2.7",
           "Microsoft.AspNet.WebApi.Core": "5.2.7",
           "Newtonsoft.Json": "12.0.2",
+          "RestSharp": "106.6.10",
           "System.Data.SqlClient": "4.6.1",
           "Microsoft.EntityFrameworkCore": "2.2.0.0",
           "Microsoft.Extensions.Identity.Core": "3.0.0.0"
@@ -187,6 +188,14 @@
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.1.20722"
+          }
+        }
+      },
+      "RestSharp/106.6.10": {
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {
+            "assemblyVersion": "106.6.10.0",
+            "fileVersion": "106.6.10.0"
           }
         }
       },
@@ -1032,6 +1041,13 @@
       "sha512": "sha512-5PYT/IqQ+UK31AmZiSS102R6EsTo+LGTSI8bp7WAUqDKaF4wHXD8U9u4WxTI1vc64tYi++8p3dk3WWNqPFgldw==",
       "path": "newtonsoft.json.bson/1.0.1",
       "hashPath": "newtonsoft.json.bson.1.0.1.nupkg.sha512"
+    },
+    "RestSharp/106.6.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-x1FM32hjnVOIn+DKtCs2Y4Q2DCUE5KW08NUXUd4GjgKjE+5PE0F6e9XfUg7nILo05M0TA/HRkRD/SeQ8+duOUA==",
+      "path": "restsharp/106.6.10",
+      "hashPath": "restsharp.106.6.10.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetCoreStarter.Utils
+﻿namespace NetCoreStarter.Utils
 {
     public static class AppConfig
     {

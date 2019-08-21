@@ -2,10 +2,9 @@
 using NetCoreStarter.Shared.Classes;
 using NetCoreStarter.Utils;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace NetCoreStarter.Data.Repositories
+namespace NetCoreStarter.Web.Repositories
 {
     public class UserRepository : BaseRepository<User>
     {

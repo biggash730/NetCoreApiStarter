@@ -12,4 +12,13 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui\3.0.0-preview8.19405.7\buildTransitive\Microsoft.AspNetCore.Identity.UI.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui\3.0.0-preview8.19405.7\buildTransitive\Microsoft.AspNetCore.Identity.UI.props')" />
+  </ImportGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgWebGrease Condition=" '$(PkgWebGrease)' == '' ">C:\Users\Francis\.nuget\packages\webgrease\1.6.0</PkgWebGrease>
+    <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\Francis\.nuget\packages\entityframework\6.2.0</PkgEntityFramework>
+    <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\Francis\.nuget\packages\microsoft.codeanalysis.analyzers\2.6.2-beta2</PkgMicrosoft_CodeAnalysis_Analyzers>
+    <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\Francis\.nuget\packages\microsoft.entityframeworkcore.tools\3.0.0-preview8.19405.11</PkgMicrosoft_EntityFrameworkCore_Tools>
+  </PropertyGroup>
 </Project>

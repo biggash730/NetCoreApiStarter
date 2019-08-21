@@ -29,6 +29,82 @@
         },
         "frameworks": {
           "netcoreapp3.0": {
+            "projectReferences": {
+              "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Web\\NetCoreStarter.Web.csproj": {
+                "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Web\\NetCoreStarter.Web.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Microsoft.AspNet.WebApi.Core": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            },
+            "Swashbuckle": {
+              "target": "Package",
+              "version": "[5.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview8-013656\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Services\\NetCoreStarter.Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Services\\NetCoreStarter.Services.csproj",
+        "projectName": "NetCoreStarter.Services",
+        "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Services\\NetCoreStarter.Services.csproj",
+        "packagesPath": "C:\\Users\\Francis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Services\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Francis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
             "projectReferences": {}
           }
         },
@@ -41,13 +117,268 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview8-013656\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj",
+        "projectName": "NetCoreStarter.Shared",
+        "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj",
+        "packagesPath": "C:\\Users\\Francis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Francis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.2.0, )"
+            },
+            "Microsoft.AspNet.Identity.Core": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview8-013656\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj",
+        "projectName": "NetCoreStarter.Utils",
+        "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj",
+        "packagesPath": "C:\\Users\\Francis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Francis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.2.0, )"
+            },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Microsoft.AspNet.WebApi.Core": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.2, )"
             },
-            "Swashbuckle": {
+            "RestSharp": {
               "target": "Package",
-              "version": "[5.6.0, )"
+              "version": "[106.6.10, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.6.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview8-013656\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Web\\NetCoreStarter.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Web\\NetCoreStarter.Web.csproj",
+        "projectName": "NetCoreStarter.Web",
+        "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Web\\NetCoreStarter.Web.csproj",
+        "packagesPath": "C:\\Users\\Francis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Web\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Francis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Services\\NetCoreStarter.Services.csproj": {
+                "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Services\\NetCoreStarter.Services.csproj"
+              },
+              "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj": {
+                "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Shared\\NetCoreStarter.Shared.csproj"
+              },
+              "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj": {
+                "projectPath": "C:\\Users\\Francis\\iCloudDrive\\Projects\\6One\\Starters\\NetCoreStarter\\NetCoreStarter.Utils\\NetCoreStarter.Utils.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Humanizer.Core": {
+              "target": "Package",
+              "version": "[2.6.2, )"
+            },
+            "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.7, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.7, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.7, )"
+            },
+            "Microsoft.CodeAnalysis.FxCopAnalyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.9.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.11, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[3.0.0-preview8.19405.4, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.0.0-preview8-19413-06, )"
+            },
+            "WebGrease": {
+              "target": "Package",
+              "version": "[1.6.0, )"
             }
           },
           "imports": [

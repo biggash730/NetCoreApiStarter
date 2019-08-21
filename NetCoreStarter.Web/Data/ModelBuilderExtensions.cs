@@ -1,31 +1,32 @@
-﻿using Microsoft.Ajax.Utilities;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NetCoreStarter.Shared.Classes;
-using NetCoreStarter.Utils;
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 
 namespace NetCoreStarter.Web.Data
 {
     public static class ModelBuilderExtensions
     {
-        
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            var roleManager = new RoleManager<Role>();
-            var userManager = new UserManager<User>();
+            
+        
             using (var context = new ApplicationDbContext())
             {
+                var roleManager = new RoleManager<Role>(
+                    new RoleStore<Role>(context),
+                    null,
+                    null,
+                    null,
+                    null);
+                var userManager = new UserManager<User>(new UserStore<User>(context), null, null, null, null, null, null, null, null);
+
                 #region Roles
                 var adminRole = new Role("Administrator");
-                var existingRole = roleManager.FindByNameAsync("Administrator").Result;
+                var existingRole = context.Roles.FindAsync("Administrator").Result;
                 if (existingRole == null)
-                {
-
+                {                   
                     var res = roleManager.CreateAsync(adminRole);
                     if (res.Result.Succeeded)
                     {

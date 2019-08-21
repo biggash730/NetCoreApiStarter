@@ -29,4 +29,10 @@ namespace NetCoreStarter.Shared.Classes
         public string Notes { get; set; }
     }
 
+    public class AppSetting : LookUp
+    {
+        [MaxLength(512), Required]
+        public string Value { get; set; }
+    }
+
 }

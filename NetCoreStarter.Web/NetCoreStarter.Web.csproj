@@ -6,11 +6,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="Repositories\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Repositories\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Data\**" />
+    <None Remove="Repositories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190817015755_initial.cs" />
+    <Compile Remove="Migrations\20190817015755_initial.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Remove="Migrations\Configuration.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\ProfileRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <PackageReference Include="Humanizer.Core" Version="2.6.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0-preview8.19405.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0-preview8.19405.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0-preview8.19405.7" />
@@ -27,8 +48,14 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\NetCoreStarter.Data\NetCoreStarter.Data.csproj" />
+    <ProjectReference Include="..\NetCoreStarter.Services\NetCoreStarter.Services.csproj" />
     <ProjectReference Include="..\NetCoreStarter.Shared\NetCoreStarter.Shared.csproj" />
+    <ProjectReference Include="..\NetCoreStarter.Utils\NetCoreStarter.Utils.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

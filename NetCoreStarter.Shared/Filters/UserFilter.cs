@@ -1,5 +1,4 @@
 ﻿using NetCoreStarter.Shared.Classes;
-using System;
 using System.Linq;
 
 namespace NetCoreStarter.Shared.Filters

@@ -2,7 +2,7 @@
 
 using NetCoreStarter.Shared.Classes;
 
-namespace NetCoreStarter.Data.Repositories
+namespace NetCoreStarter.Web.Repositories
 {
     public class ProfileRepository : BaseRepository<Profile>
     {

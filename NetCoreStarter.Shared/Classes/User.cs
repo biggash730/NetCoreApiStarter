@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetCoreStarter.Shared.Classes
 {
@@ -21,44 +21,10 @@ namespace NetCoreStarter.Shared.Classes
         public virtual ICollection<UserLogin> Logins { get; set; }
         public virtual ICollection<UserToken> Tokens { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        [NotMapped]
+        public string Password { get; set; }
+        [NotMapped]
+        public Role Role { get; set; }
     }
 
-    public class Role : IdentityRole
-    {
-        private string v;
-
-        public Role(string v)
-        {
-            this.v = v;
-        }
-
-        public virtual ICollection<UserRole> UserRoles { get; set; }
-        public virtual ICollection<RoleClaim> RoleClaims { get; set; }
-    }
-
-    public class UserRole : IdentityUserRole<string>
-    {
-        public virtual User User { get; set; }
-        public virtual Role Role { get; set; }
-    }
-
-    public class UserClaim : IdentityUserClaim<string>
-    {
-        public virtual User User { get; set; }
-    }
-
-    public class UserLogin : IdentityUserLogin<string>
-    {
-        public virtual User User { get; set; }
-    }
-
-    public class RoleClaim : IdentityRoleClaim<string>
-    {
-        public virtual Role Role { get; set; }
-    }
-
-    public class UserToken : IdentityUserToken<string>
-    {
-        public virtual User User { get; set; }
-    }
 }

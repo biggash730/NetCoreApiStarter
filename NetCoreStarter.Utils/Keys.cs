@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetCoreStarter.Utils
+﻿namespace NetCoreStarter.Utils
 {
     public class Privileges
     {
@@ -23,6 +19,7 @@ namespace NetCoreStarter.Utils
 
     public class GenericProperties
     {
+        public const string Administrator = "Administrator";
         public const string Privilege = "Privilege";
         public const string CreatedBy = "CreatedBy";
         public const string CreatedAt = "CreatedAt";

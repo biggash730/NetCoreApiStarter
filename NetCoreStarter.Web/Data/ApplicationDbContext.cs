@@ -19,8 +19,7 @@ namespace NetCoreStarter.Web.Data
         {
         }
 
-        public DbSet<LookUp> LookUps { get; set; }
-        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<AppSetting> AppSettings { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -69,9 +68,8 @@ namespace NetCoreStarter.Web.Data
             });
 
             builder.Seed();
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new RoleClaimConfiguration());
         }
     }
-
-    
-    
 }

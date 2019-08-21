@@ -1,24 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetCoreStarter.Shared.Filters;
 using NetCoreStarter.Utils;
-using NetCoreStarter.Web.Data;
+using NetCoreStarter.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace NetCoreStarter.Data.Repositories
+namespace NetCoreStarter.Web.Repositories
 {
-    public class BaseRepository<T> where T : class
+    public class BaseRepository<T> : IDisposable where T : class
     {
-        protected readonly ApplicationDbContext DbContext;
+        protected readonly ApplicationDbContext _context;
         protected Microsoft.EntityFrameworkCore.DbSet<T> DbSet { get; set; }
 
         public BaseRepository()
         {
-            var options = new DbContextOptions<ApplicationDbContext>();
-            DbContext = new ApplicationDbContext(options);
-            DbSet = DbContext.Set<T>();
+            _context = new ApplicationDbContext();
+            DbSet = _context.Set<T>();
         }
 
         public T Get(long id) { return DbSet.Find(id); }
@@ -37,20 +35,20 @@ namespace NetCoreStarter.Data.Repositories
 
         public virtual void Update(T entity)
         {
-            DbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            DbContext.SaveChanges();
+            _context.Entry(entity).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public virtual void Insert(T entity)
         {
             DbSet.Add(entity);
-            DbContext.SaveChanges();
+            _context.SaveChanges();
         }
 
         public virtual void BulkInsert(List<T> entries)
         {
             DbSet.AddRange(entries);
-            DbContext.SaveChanges();
+            _context.SaveChanges();
         }
 
         public virtual void Delete(long id)
@@ -65,9 +63,14 @@ namespace NetCoreStarter.Data.Repositories
             }
 
             DbSet.Remove(record);
-            DbContext.SaveChanges();
+            _context.SaveChanges();
         }
 
-        public void SaveChanges() { DbContext.SaveChanges(); }
+        public void SaveChanges() { _context.SaveChanges(); }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

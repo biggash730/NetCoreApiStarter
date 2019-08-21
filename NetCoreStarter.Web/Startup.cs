@@ -1,21 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NetCoreStarter.Web.Data;
 using NetCoreStarter.Shared.Classes;
-using Newtonsoft.Json;
 using NetCoreStarter.Utils;
-using System.IO;
+using NetCoreStarter.Utils.Classes;
+using NetCoreStarter.Services;
+using NetCoreStarter.Web.Models;
 
 namespace NetCoreStarter.Web
 {
@@ -74,7 +69,9 @@ namespace NetCoreStarter.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            LoadSettings();
+            LoadSetupConfig.LoadSettings();
+            //Start Background Services
+            ServicesScheduler.StartAsync().GetAwaiter();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -103,10 +100,5 @@ namespace NetCoreStarter.Web
             });
         }
 
-        private static void LoadSettings()
-        {
-            AppConfig.Setting = JsonConvert.DeserializeObject<Setting>
-                (File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppConfig.json")));
-        }
     }
 }
