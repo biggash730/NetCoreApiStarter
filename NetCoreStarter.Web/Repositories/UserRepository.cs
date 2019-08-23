@@ -1,6 +1,7 @@
 ﻿
 using NetCoreStarter.Shared.Classes;
 using NetCoreStarter.Utils;
+using NetCoreStarter.Web.Models;
 using System;
 using System.Linq;
 

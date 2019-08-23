@@ -17,15 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190817015755_initial.cs" />
-    <Compile Remove="Migrations\20190817015755_initial.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDbContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\Configuration.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="Repositories\BaseRepository.cs" />
-    <Compile Include="Repositories\ProfileRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
 
@@ -51,11 +44,6 @@
     <ProjectReference Include="..\NetCoreStarter.Services\NetCoreStarter.Services.csproj" />
     <ProjectReference Include="..\NetCoreStarter.Shared\NetCoreStarter.Shared.csproj" />
     <ProjectReference Include="..\NetCoreStarter.Utils\NetCoreStarter.Utils.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

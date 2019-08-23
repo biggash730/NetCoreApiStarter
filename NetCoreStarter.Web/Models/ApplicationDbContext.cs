@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NetCoreStarter.Shared.Classes;
 
 namespace NetCoreStarter.Web.Models
@@ -9,18 +10,19 @@ namespace NetCoreStarter.Web.Models
         UserClaim, UserRole, UserLogin,
         RoleClaim, UserToken>
     {
-        //public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        //    : base(options)
-        //{
-           
-        //}
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+
+        }
 
         public DbSet<AppSetting> AppSettings { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            options.UseSqlServer("Server=.;Database=.NetCoreStarter.;Trusted_Connection=True;MultipleActiveResultSets=true");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server=.;Database=.NetCoreStarter.;Trusted_Connection=True;MultipleActiveResultSets=true");
+        //}
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -66,7 +68,7 @@ namespace NetCoreStarter.Web.Models
                     .IsRequired();
             });
 
-            builder.Seed();
+            //builder.Seed();
         }
     }
 }

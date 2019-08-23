@@ -1,49 +1,45 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using NetCoreStarter.Shared.Classes;
 using NetCoreStarter.Utils;
+using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace NetCoreStarter.Web.Models
 {
-    public static class ModelBuilderExtensions
+    public static class SeedData
     {
-        public static void Seed(this ModelBuilder modelBuilder)
+        public static void Initialize(IServiceProvider serviceProvider)
         {
-
-            using (var context = new ApplicationDbContext())
+            var userManager = serviceProvider.GetService<UserManager<User>>();
+            var roleManager = serviceProvider.GetService<RoleManager<Role>>();
+            using (var context = new ApplicationDbContext(
+                serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
             {
-                var roleManager = new RoleManager<Role>(
-                    new RoleStore<Role>(context),
-                    null,
-                    null,
-                    null,
-                    null);
-                var userManager = new UserManager<User>(new UserStore<User>(context), null, null, null, null, null, null, null, null);
-
                 #region Roles
-                var adminRole = new Role("Administrator");
+                var adminRole = new Role { Name = "Administrator", NormalizedName = "Administrator" };
                 var existingRole = context.Roles.FindAsync("Administrator").Result;
                 if (existingRole == null)
-                {                   
+                {
                     var res = roleManager.CreateAsync(adminRole);
                     if (res.Result.Succeeded)
                     {
                         roleManager.AddClaimAsync(adminRole,
-                        new Claim(GenericProperties.Privilege, Privileges.CanViewDashboard));
+                        new Claim(GenericProperties.Privilege, Privileges.CanViewDashboard)).Wait();
                         roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewReports));
+                            new Claim(GenericProperties.Privilege, Privileges.CanViewReports)).Wait();
                         roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewSettings));
+                            new Claim(GenericProperties.Privilege, Privileges.CanViewSettings)).Wait();
                         roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanManageRoles));
+                            new Claim(GenericProperties.Privilege, Privileges.CanManageRoles)).Wait();
                         roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewRoles));
+                            new Claim(GenericProperties.Privilege, Privileges.CanViewRoles)).Wait();
                         roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanManageUsers));
+                            new Claim(GenericProperties.Privilege, Privileges.CanManageUsers)).Wait();
                         roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewUsers));
+                            new Claim(GenericProperties.Privilege, Privileges.CanViewUsers)).Wait();
                     }
                 }
                 #endregion
@@ -58,12 +54,12 @@ namespace NetCoreStarter.Web.Models
                 var existingUser = userManager.FindByNameAsync("Admin").Result;
                 //Admin User
                 if (existingUser == null)
-                {                    
+                {
                     var res = userManager.CreateAsync(adminUser, "admin@app");
                     if (res.Result.Succeeded)
                     {
                         var user = userManager.FindByNameAsync("Admin").Result;
-                        userManager.AddToRoleAsync(user, adminRole.Name);
+                        userManager.AddToRoleAsync(user, adminRole.Name).Wait();
                     }
                 }
                 #endregion
@@ -71,5 +67,6 @@ namespace NetCoreStarter.Web.Models
                 context.SaveChanges();
             }
         }
+
     }
 }

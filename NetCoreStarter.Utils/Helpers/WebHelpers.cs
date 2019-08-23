@@ -12,13 +12,18 @@ namespace NetCoreStarter.Utils.Helpers
 {
     public class WebHelpers
     {
-        public static ApiResponse BuildResponse(HttpStatusCode statusCode, object data, string msg, long total)
-        {
-            var success = false;
-            if (string.IsNullOrEmpty(msg)) msg = $"{total} record(s) found.";
-            if (statusCode == HttpStatusCode.OK) success = true;
-            return new ApiResponse(statusCode, data, msg, success, total);
-        }
+        //public static ActionResult BuildResponse(object data, string msg, long total)
+        //{
+        //    var success = false;
+        //    if (string.IsNullOrEmpty(msg)) msg = $"{total} record(s) found.";
+        //    if (statusCode == HttpStatusCode.OK) success = true;
+        //    return OK();
+        //}
+
+        //private static ActionResult OK()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// Builds the erroe message
@@ -79,10 +84,9 @@ namespace NetCoreStarter.Utils.Helpers
         /// </summary>
         /// <param name="exception">The ex.</param>
         /// <returns></returns>
-        public static ApiResponse ProcessException(Exception exception)
+        public static string ProcessException(Exception exception)
         {
-            var msg = ErrorMsg(exception);
-            return BuildResponse(HttpStatusCode.BadRequest, null, msg, 0);
+            return ErrorMsg(exception);
         }
 
         /// <summary>
@@ -105,11 +109,11 @@ namespace NetCoreStarter.Utils.Helpers
         /// </summary>
         /// <param name="values">The ASP.NET MVC model state values.</param>
         /// <returns></returns>
-        public static ApiResponse ProcessException(ICollection<ModelState> values)
+        public static string ProcessException(ICollection<ModelState> values)
         {
             var msg = values.SelectMany(modelState => modelState.Errors)
                 .Aggregate("", (current, error) => current + error.ErrorMessage + "\n");
-            return BuildResponse(HttpStatusCode.BadRequest, null, msg, 0);
+            return msg;
         }
 
         /// <summary>
@@ -117,10 +121,10 @@ namespace NetCoreStarter.Utils.Helpers
         /// </summary>
         /// <param name="identityResult">The identity result.</param>
         /// <returns></returns>
-        public static ApiResponse ProcessException(IdentityResult identityResult)
+        public static string ProcessException(IdentityResult identityResult)
         {
             var msg = identityResult.Errors.Aggregate("", (current, error) => current + error + "\n");
-            return BuildResponse(HttpStatusCode.BadRequest, null, msg, 0);
+            return msg;
         }
     }
 

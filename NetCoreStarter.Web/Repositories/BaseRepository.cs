@@ -10,12 +10,13 @@ namespace NetCoreStarter.Web.Repositories
 {
     public class BaseRepository<T> : IDisposable where T : class
     {
-        protected readonly ApplicationDbContext _context;
-        protected Microsoft.EntityFrameworkCore.DbSet<T> DbSet { get; set; }
+        public readonly ApplicationDbContext _context;
+        protected DbSet<T> DbSet { get; set; }
 
         public BaseRepository()
         {
-            _context = new ApplicationDbContext();
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
+            _context = new ApplicationDbContext(options.Options);
             DbSet = _context.Set<T>();
         }
 

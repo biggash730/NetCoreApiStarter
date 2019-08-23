@@ -31,35 +31,36 @@ namespace NetCoreStarter.Web
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<Role>()
+                .AddRoleManager<RoleManager<Role>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings.
-                options.Password = new PasswordOptions()
-                {
-                    RequireDigit = AppConfig.Setting.PasswordPolicies.RequireDigit,
-                    RequiredLength = AppConfig.Setting.PasswordPolicies.MinimumLength,
-                    RequireLowercase = AppConfig.Setting.PasswordPolicies.RequireLowercase,
-                    RequireUppercase = AppConfig.Setting.PasswordPolicies.RequireUppercase,
-                    RequireNonAlphanumeric = AppConfig.Setting.PasswordPolicies.RequireNonLetterOrDigit,
-                    RequiredUniqueChars = AppConfig.Setting.PasswordPolicies.RequiredUniqueChars
-                };
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    // Password settings.
+            //    options.Password = new PasswordOptions()
+            //    {
+            //        RequireDigit = AppConfig.Setting.PasswordPolicies.RequireDigit,
+            //        RequiredLength = AppConfig.Setting.PasswordPolicies.MinimumLength,
+            //        RequireLowercase = AppConfig.Setting.PasswordPolicies.RequireLowercase,
+            //        RequireUppercase = AppConfig.Setting.PasswordPolicies.RequireUppercase,
+            //        RequireNonAlphanumeric = AppConfig.Setting.PasswordPolicies.RequireNonLetterOrDigit,
+            //        RequiredUniqueChars = AppConfig.Setting.PasswordPolicies.RequiredUniqueChars
+            //    };
 
-                // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(600);
-                options.Lockout.MaxFailedAccessAttempts = 50;
-                options.Lockout.AllowedForNewUsers = true;
+            //    // Lockout settings.
+            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(600);
+            //    options.Lockout.MaxFailedAccessAttempts = 50;
+            //    options.Lockout.AllowedForNewUsers = true;
 
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+?!@#$%^&*";
-                options.User.RequireUniqueEmail = false;
-            });
+            //    // User settings.
+            //    options.User.AllowedUserNameCharacters =
+            //    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+?!@#$%^&*";
+            //    options.User.RequireUniqueEmail = false;
+            //});
 
 
             services.AddControllersWithViews();
