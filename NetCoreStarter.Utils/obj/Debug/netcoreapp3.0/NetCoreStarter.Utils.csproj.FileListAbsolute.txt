@@ -18,3 +18,4 @@ C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarte
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.csproj.CopyComplete
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.dll
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.pdb
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.csprojAssemblyReference.cache

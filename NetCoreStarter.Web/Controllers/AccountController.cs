@@ -16,6 +16,7 @@ namespace NetCoreStarter.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<User> userManager;
@@ -238,6 +239,7 @@ namespace NetCoreStarter.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         [Route("CreateRole")]
         public async Task<ActionResult> CreateRole(Role model)
@@ -253,6 +255,7 @@ namespace NetCoreStarter.Web.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         [Route("UpdateProfile")]
         public async Task<ActionResult> UpdateProfile(User model)
@@ -279,7 +282,8 @@ namespace NetCoreStarter.Web.Controllers
                 return BadRequest(WebHelpers.ProcessException(ex));
             }
         }
-
+        
+        [Authorize]
         [HttpDelete]
         [Route("DeleteUser")]
         public async Task<ActionResult> DeleteUser(string id)
@@ -295,97 +299,50 @@ namespace NetCoreStarter.Web.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<ActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            try
+            {
+                var user = User.Identity.AsAppUser().Result;
+                var result = await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
 
-        //// GET: api/TodoItems
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
-        //{
-        //    return await _context.TodoItems.ToListAsync();
-        //}
+                if (!result.Succeeded) return BadRequest(WebHelpers.ProcessException(result));
 
-        //#region snippet_GetByID
-        //// GET: api/TodoItems/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
-        //{
-        //    var todoItem = await _context.TodoItems.FindAsync(id);
+                return Ok("Password changed sucessfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(WebHelpers.ProcessException(ex));
+            }
+        }
 
-        //    if (todoItem == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return todoItem;
-        //}
-        //#endregion
-
-        //#region snippet_Update
-        //// PUT: api/TodoItems/5
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
-        //{
-        //    if (id != todoItem.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(todoItem).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!TodoItemExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-        //#endregion
-
-        //#region snippet_Create
-        //// POST: api/TodoItems
-        //[HttpPost]
-        //public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
-        //{
-        //    _context.TodoItems.Add(todoItem);
-        //    await _context.SaveChangesAsync();
-
-        //    //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
-        //    return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
-        //}
-        //#endregion
-
-        //#region snippet_Delete
-        //// DELETE: api/TodoItems/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<TodoItem>> DeleteTodoItem(long id)
-        //{
-        //    var todoItem = await _context.TodoItems.FindAsync(id);
-        //    if (todoItem == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.TodoItems.Remove(todoItem);
-        //    await _context.SaveChangesAsync();
-
-        //    return todoItem;
-        //}
-        //#endregion
-
-        //private bool TodoItemExists(long id)
-        //{
-        //    return _context.TodoItems.Any(e => e.Id == id);
-        //}
+        [HttpPost]
+        [Route("resetpassword")]
+        public async Task<ActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            try
+            {
+                var us = _context.Users.FirstOrDefault(x => x.UserName == model.UserName && !x.Hidden && !x.IsDeleted);
+                if (us == null) throw new Exception("System Error");
+                var result = await userManager.RemovePasswordAsync(us);
+                if (result.Succeeded)
+                {
+                    var res = await userManager.AddPasswordAsync(us, model.Password);
+                    if (!res.Succeeded) return BadRequest(WebHelpers.ProcessException(res));
+                }
+                else return BadRequest(WebHelpers.ProcessException(result));
+                
+                        _context.SaveChanges();
+                return Ok("Password Reset Successful");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(WebHelpers.ProcessException(e));
+            }
+        }
     }
 
     

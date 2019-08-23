@@ -5,3 +5,4 @@ C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarte
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Services\obj\Debug\netcoreapp3.0\NetCoreStarter.Services.AssemblyInfo.cs
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Services\obj\Debug\netcoreapp3.0\NetCoreStarter.Services.dll
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Services\obj\Debug\netcoreapp3.0\NetCoreStarter.Services.pdb
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Services\obj\Debug\netcoreapp3.0\NetCoreStarter.Services.csprojAssemblyReference.cache
