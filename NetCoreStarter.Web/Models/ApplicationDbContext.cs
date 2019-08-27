@@ -18,11 +18,6 @@ namespace NetCoreStarter.Web.Models
 
         public DbSet<AppSetting> AppSettings { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=.;Database=.NetCoreStarter.;Trusted_Connection=True;MultipleActiveResultSets=true");
-        //}
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -67,8 +62,6 @@ namespace NetCoreStarter.Web.Models
                     .HasForeignKey(rc => rc.RoleId)
                     .IsRequired();
             });
-
-            //builder.Seed();
         }
     }
 }

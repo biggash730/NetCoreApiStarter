@@ -3,17 +3,27 @@
     public class Privileges
     {
         //Permissions on the User Model
-        public const string CanManageUsers = "CanManageUsers";
+        public const string CanCreateUsers = "CanCreateUsers";
         public const string CanViewUsers = "CanViewUsers";
+        public const string CanUpdateUsers = "CanUpdateUsers";
+        public const string CanDeleteUsers = "CanDeleteUsers";
 
         //Permissions on the Role
-        public const string CanManageRoles = "CanManageRoles";
+        public const string CanCreateRoles = "CanCreateRoles";
         public const string CanViewRoles = "CanViewRoles";
+        public const string CanUpdateRoles = "CanUpdateRoles";
+        public const string CanDeleteRoles = "CanDeleteRoles";
+
+        //permissions on Settings
+        public const string CanCreateSettings = "CanCreateSettings";
+        public const string CanViewSettings = "CanViewSettings";
+        public const string CanUpdateSettings = "CanUpdateSettings";
+        public const string CanDeleteSettings = "CanDeleteSettings";
+
 
         //permissions on systems configuration
         public const string CanViewDashboard = "CanViewDashboard";
         public const string CanViewReports = "CanViewReports";
-        public const string CanViewSettings = "CanViewSettings";
 
     }
 

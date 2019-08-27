@@ -7,10 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetCoreStarter.Shared.Classes;
-using NetCoreStarter.Utils;
-using NetCoreStarter.Utils.Classes;
 using NetCoreStarter.Services;
 using NetCoreStarter.Web.Models;
+using Microsoft.OpenApi.Models;
 
 namespace NetCoreStarter.Web
 {
@@ -26,51 +25,53 @@ namespace NetCoreStarter.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<Role>()
-                .AddRoleManager<RoleManager<Role>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
 
+            // configure token generation
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options =>
+                        {
+                            // Password settings.
+                            options.Password = new PasswordOptions()
+                            {
+                                RequireDigit = bool.Parse(Configuration.GetSection("PasswordPolicies:RequireDigit").Value),
+                                RequiredLength = int.Parse(Configuration.GetSection("PasswordPolicies:MinimumLength").Value),
+                                RequireLowercase = bool.Parse(Configuration.GetSection("PasswordPolicies:RequireLowercase").Value),
+                                RequireUppercase = bool.Parse(Configuration.GetSection("PasswordPolicies:RequireUppercase").Value),
+                                RequireNonAlphanumeric = bool.Parse(Configuration.GetSection("PasswordPolicies:RequireNonLetterOrDigit").Value),
+                                RequiredUniqueChars = int.Parse(Configuration.GetSection("PasswordPolicies:RequiredUniqueChars").Value),
+                                
+                            };
 
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // Password settings.
-            //    options.Password = new PasswordOptions()
-            //    {
-            //        RequireDigit = AppConfig.Setting.PasswordPolicies.RequireDigit,
-            //        RequiredLength = AppConfig.Setting.PasswordPolicies.MinimumLength,
-            //        RequireLowercase = AppConfig.Setting.PasswordPolicies.RequireLowercase,
-            //        RequireUppercase = AppConfig.Setting.PasswordPolicies.RequireUppercase,
-            //        RequireNonAlphanumeric = AppConfig.Setting.PasswordPolicies.RequireNonLetterOrDigit,
-            //        RequiredUniqueChars = AppConfig.Setting.PasswordPolicies.RequiredUniqueChars
-            //    };
+                            // Lockout settings.
+                            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(600);
+                            options.Lockout.MaxFailedAccessAttempts = 50;
+                            options.Lockout.AllowedForNewUsers = true;
 
-            //    // Lockout settings.
-            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(600);
-            //    options.Lockout.MaxFailedAccessAttempts = 50;
-            //    options.Lockout.AllowedForNewUsers = true;
+                            // User settings.
+                            options.User.AllowedUserNameCharacters =
+                                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+?!@#$%^&*";
+                            options.User.RequireUniqueEmail = false;
+                        });
+            services.AddCors();
 
-            //    // User settings.
-            //    options.User.AllowedUserNameCharacters =
-            //    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+?!@#$%^&*";
-            //    options.User.RequireUniqueEmail = false;
-            //});
-
-
+            
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Net Core Starter", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            LoadSetupConfig.LoadSettings();
             //Start Background Services
             ServicesScheduler.StartAsync().GetAwaiter();
             if (env.IsDevelopment())
@@ -84,6 +85,12 @@ namespace NetCoreStarter.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            //app.UseIdentity();
+            app.UseCors();
+                //.AllowAnyOrigin()
+                //.AllowCredentials()
+                //.AllowAnyMethod()
+                //.AllowAnyHeader());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -91,7 +98,15 @@ namespace NetCoreStarter.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
 
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Net Core Starter V1");
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -100,6 +115,5 @@ namespace NetCoreStarter.Web
                 endpoints.MapRazorPages();
             });
         }
-
     }
 }

@@ -7,9 +7,9 @@ namespace NetCoreStarter.Web.Models
 {
     public static class IdentityExtensions
     {
-        public static async Task<User> AsAppUser(this IIdentity identity)
+        public static async Task<User> AsAppUser(this IIdentity identity, ApplicationDbContext context)
         {
-            var user = new UserRepository().Get(identity.Name);
+            var user = new UserRepository(context).Get(identity.Name);
             return await Task.FromResult(user);
         }
     }

@@ -10,6 +10,10 @@ namespace NetCoreStarter.Web.Repositories
 {
     public class RoleRepository : BaseRepository<Role>
     {
+        public RoleRepository(ApplicationDbContext context) : base(context)
+        {
+        }
+
         public override void Update(Role entity)
         {
             var theRole = DbSet.Find(entity.Id);
@@ -63,6 +67,11 @@ namespace NetCoreStarter.Web.Repositories
         public Role GetByName(string name) 
         {
             return DbSet.Where(x => x.Name == name).FirstOrDefault(); 
+        }
+
+        public Role GetById(string id)
+        {
+            return DbSet.Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void RemoveFromAllRoles(string userId)

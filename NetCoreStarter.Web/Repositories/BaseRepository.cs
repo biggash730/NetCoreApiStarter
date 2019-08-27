@@ -13,10 +13,9 @@ namespace NetCoreStarter.Web.Repositories
         public readonly ApplicationDbContext _context;
         protected DbSet<T> DbSet { get; set; }
 
-        public BaseRepository()
+        public BaseRepository(ApplicationDbContext context)
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
-            _context = new ApplicationDbContext(options.Options);
+            _context = context;
             DbSet = _context.Set<T>();
         }
 
@@ -71,7 +70,7 @@ namespace NetCoreStarter.Web.Repositories
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
     }
 }

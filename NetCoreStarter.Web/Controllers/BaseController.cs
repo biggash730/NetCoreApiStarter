@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreStarter.Utils;
 using NetCoreStarter.Utils.Helpers;
@@ -12,17 +12,24 @@ using NetCoreStarter.Web.Repositories;
 
 namespace NetCoreStarter.Web.Controllers
 {
-    [System.Web.Http.Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class BaseController<T> : ControllerBase where T : class
     {
-        protected BaseRepository<T> _repository = new BaseRepository<T>();
+        public readonly ApplicationDbContext _context;
+        protected BaseRepository<T> _repository;
         private readonly string _klassName = typeof(T).Name.Humanize(LetterCasing.Title);
-        
+
+        public BaseController(ApplicationDbContext context)
+        {
+            _context = context;
+            _repository = new BaseRepository<T>(context);
+        }
+
         #region snippet_Get
         // GET: api/model
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public async Task<ActionResult> Get()
         {
             var res = _repository.Get();
@@ -34,7 +41,7 @@ namespace NetCoreStarter.Web.Controllers
 
         #region snippet_GetByID
         // GET: api/model/5
-        [System.Web.Http.HttpGet]
+        [HttpGet("{id}")]
         public async Task<ActionResult> Get(long id)
         {
             var res = _repository.Get(id);
@@ -45,7 +52,7 @@ namespace NetCoreStarter.Web.Controllers
 
         #region snippet_Update
         // PUT: api/model/5
-        [System.Web.Http.HttpPut]
+        [HttpPut]
         public async Task<ActionResult> Put(T model)
         {
             try
@@ -62,7 +69,7 @@ namespace NetCoreStarter.Web.Controllers
 
         #region snippet_Create
         // POST: api/model
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public async Task<ActionResult> Post(T model)
         {
             try
@@ -79,7 +86,7 @@ namespace NetCoreStarter.Web.Controllers
 
         #region snippet_Delete
         // DELETE: api/model/5
-        [System.Web.Http.HttpDelete]
+        [HttpDelete]
         public async Task<ActionResult> Delete(long id)
         {
             try

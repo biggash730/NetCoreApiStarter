@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreStarter.Web", "NetCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreStarter.Shared", "NetCoreStarter.Shared\NetCoreStarter.Shared.csproj", "{DD33D4BB-AEF0-4B10-BFF0-942F3ACE1B29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreStarter.Services", "NetCoreStarter.Services\NetCoreStarter.Services.csproj", "{79DF012A-3FC6-4E80-B467-2B8D2CACE3C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreStarter.Services", "NetCoreStarter.Services\NetCoreStarter.Services.csproj", "{79DF012A-3FC6-4E80-B467-2B8D2CACE3C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

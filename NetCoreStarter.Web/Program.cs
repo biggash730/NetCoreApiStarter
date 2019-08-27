@@ -1,8 +1,6 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NetCoreStarter.Web.Models;
 using System;
@@ -13,20 +11,11 @@ namespace NetCoreStarter.Web
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<ApplicationDbContext>();
-                context.Database.Migrate();
-
-                // requires using Microsoft.Extensions.Configuration;
-                //var config = host.Services.GetRequiredService<IConfiguration>();
-                // Set password with the Secret Manager tool.
-                // dotnet user-secrets set SeedUserPW <pw>
-
-                //var tokenSecret = config["TokenSecret"];
                 try
                 {
                     SeedData.Initialize(services);
@@ -39,17 +28,10 @@ namespace NetCoreStarter.Web
             }
 
             host.Run();
-
-            //CreateHostBuilder(args)
-            //    .Build()
-            //    .Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
     }
 }

@@ -9,6 +9,10 @@ namespace NetCoreStarter.Web.Repositories
 {
     public class UserRepository : BaseRepository<User>
     {
+        public UserRepository(ApplicationDbContext context) : base(context)
+        {
+        }
+
         public User Get(string username)
         {
             return DbSet.SingleOrDefault(x => x.UserName == username);

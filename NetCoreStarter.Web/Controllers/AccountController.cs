@@ -23,14 +23,13 @@ namespace NetCoreStarter.Web.Controllers
         private readonly RoleManager<Role> roleManager;
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<User> signInManager;
-        private readonly UserRepository _userRepo = new UserRepository();
 
         public AccountController(IServiceProvider serviceProvider)
         {
-            this.userManager = serviceProvider.GetService<UserManager<User>>();
-            this.roleManager = serviceProvider.GetService<RoleManager<Role>>();
-            this._context = _userRepo._context;
-            this.signInManager = serviceProvider.GetService<SignInManager<User>>();
+            userManager = serviceProvider.GetService<UserManager<User>>();
+            roleManager = serviceProvider.GetService<RoleManager<Role>>();
+            _context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>());
+            signInManager = serviceProvider.GetService<SignInManager<User>>();
         }
 
         //[HttpPost]
@@ -130,8 +129,8 @@ namespace NetCoreStarter.Web.Controllers
         {
             try
             {
-                var roleRepo = new RoleRepository();
-                var user = _userRepo.Get(model.UserName);
+                var roleRepo = new RoleRepository(_context);
+                var user = new UserRepository(_context).Get(model.UserName);
                 var role = roleRepo.GetByName(model.Role);
 
                 if (user == null) return NotFound("Updating user not found. Please update an existing user");
@@ -141,7 +140,7 @@ namespace NetCoreStarter.Web.Controllers
                 user.UpdatedAt = DateTime.Now.ToUniversalTime();
                 user.PhoneNumber = model.PhoneNumber;
                 user.Email = model.Email;
-                _userRepo.Update(user);
+                new UserRepository(_context).Update(user);
 
                 //Remove old role
                 roleRepo.RemoveFromAllRoles(user.Id);
@@ -159,12 +158,13 @@ namespace NetCoreStarter.Web.Controllers
 
         [HttpGet]
         [Route("GetUsers")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetUsers()
         {
             try
             {
-                var data = _userRepo.Get()
-                    .Select(x => new
+                var res = _context.Users.Include(x=> x.UserRoles).ToList();
+                var data = res.Select(x => new
                     {
                         x.Id,
                         x.OtherNames,
@@ -172,7 +172,7 @@ namespace NetCoreStarter.Web.Controllers
                         x.Email,
                         x.PhoneNumber,
                         x.UserName,
-                        x.UserRoles.First()?.Role,
+                        Role = new RoleRepository(_context).GetById(x.UserRoles.First().RoleId)?.Name,
                     }).ToList();
                 return Ok(data);
             }
@@ -184,6 +184,7 @@ namespace NetCoreStarter.Web.Controllers
 
         [HttpGet]
         [Route("GetClaims")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetClaims()
         {
             try
@@ -199,6 +200,7 @@ namespace NetCoreStarter.Web.Controllers
 
         [HttpGet]
         [Route("GetRoles")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetRoles()
         {
             try
@@ -239,14 +241,13 @@ namespace NetCoreStarter.Web.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         [Route("CreateRole")]
         public async Task<ActionResult> CreateRole(Role model)
         {
             try
             {
-                new RoleRepository().Insert(model);
+                new RoleRepository(_context).Insert(model);
                 return Created("","Role Created Successfully");
             }
             catch (Exception ex)
@@ -255,15 +256,14 @@ namespace NetCoreStarter.Web.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         [Route("UpdateProfile")]
         public async Task<ActionResult> UpdateProfile(User model)
         {
             try
             {
-                var userId = User.Identity.AsAppUser().Result.Id;
-                var db = _userRepo._context;
+                var userId = User.Identity.AsAppUser(_context).Result.Id;
+                var db = _context;
                 var user = db.Users.FirstOrDefault(x => x.Id == userId);
                 if (user == null) throw new Exception("Could not find user");
 
@@ -283,14 +283,13 @@ namespace NetCoreStarter.Web.Controllers
             }
         }
         
-        [Authorize]
         [HttpDelete]
         [Route("DeleteUser")]
         public async Task<ActionResult> DeleteUser(string id)
         {
             try
             {
-                _userRepo.Delete(id);
+                new UserRepository(_context).Delete(id);
                 return Ok("User Deleted Successfully.");
             }
             catch (Exception ex)
@@ -306,7 +305,7 @@ namespace NetCoreStarter.Web.Controllers
         {
             try
             {
-                var user = User.Identity.AsAppUser().Result;
+                var user = User.Identity.AsAppUser(_context).Result;
                 var result = await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
 
                 if (!result.Succeeded) return BadRequest(WebHelpers.ProcessException(result));
@@ -326,7 +325,7 @@ namespace NetCoreStarter.Web.Controllers
             try
             {
                 var us = _context.Users.FirstOrDefault(x => x.UserName == model.UserName && !x.Hidden && !x.IsDeleted);
-                if (us == null) throw new Exception("System Error");
+                if (us == null) return NotFound("Unknown Username");
                 var result = await userManager.RemovePasswordAsync(us);
                 if (result.Succeeded)
                 {

@@ -1,5 +1,3 @@
-C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.AssemblyInfoInputs.cache
-C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.AssemblyInfo.cs
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\bin\Debug\netcoreapp3.0\NetCoreStarter.Utils.deps.json
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\bin\Debug\netcoreapp3.0\NetCoreStarter.Utils.dll
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\bin\Debug\netcoreapp3.0\NetCoreStarter.Utils.pdb
@@ -15,6 +13,8 @@ C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarte
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Logging.Abstractions.xml
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Options.xml
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Primitives.xml
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.AssemblyInfoInputs.cache
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.AssemblyInfo.cs
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.csproj.CopyComplete
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.dll
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Utils\obj\Debug\netcoreapp3.0\NetCoreStarter.Utils.pdb

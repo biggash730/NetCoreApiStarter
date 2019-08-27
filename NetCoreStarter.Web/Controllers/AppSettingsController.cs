@@ -7,14 +7,17 @@ using NetCoreStarter.Web.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace NetCoreStarter.Web.Controllers
 {
     public class AppSettingsController : BaseController<AppSetting>
     {
-        [System.Web.Http.HttpPost]
+        public AppSettingsController(ApplicationDbContext context) : base(context)
+        {
+        }
 
+        [HttpPost]
+        [Route("query")]
         public async Task<ActionResult> Query(AppSettingsFilter filter)
         {
             using (var db = _repository._context)

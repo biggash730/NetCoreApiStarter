@@ -300,6 +300,10 @@
               "target": "Package",
               "version": "[3.0.0-preview8-19413-06, )"
             },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0-rc2, )"
+            },
             "WebGrease": {
               "target": "Package",
               "version": "[1.6.0, )"

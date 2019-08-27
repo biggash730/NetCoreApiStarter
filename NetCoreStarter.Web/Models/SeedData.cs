@@ -20,7 +20,7 @@ namespace NetCoreStarter.Web.Models
             {
                 #region Roles
                 var adminRole = new Role { Name = "Administrator", NormalizedName = "Administrator" };
-                var existingRole = context.Roles.FindAsync("Administrator").Result;
+                var existingRole = context.Roles.FindAsync(adminRole.Name).Result;
                 if (existingRole == null)
                 {
                     var res = roleManager.CreateAsync(adminRole);
@@ -30,16 +30,33 @@ namespace NetCoreStarter.Web.Models
                         new Claim(GenericProperties.Privilege, Privileges.CanViewDashboard)).Wait();
                         roleManager.AddClaimAsync(adminRole,
                             new Claim(GenericProperties.Privilege, Privileges.CanViewReports)).Wait();
+                        
                         roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewSettings)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanManageRoles)).Wait();
+                            new Claim(GenericProperties.Privilege, Privileges.CanCreateRoles)).Wait();
                         roleManager.AddClaimAsync(adminRole,
                             new Claim(GenericProperties.Privilege, Privileges.CanViewRoles)).Wait();
                         roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanManageUsers)).Wait();
+                            new Claim(GenericProperties.Privilege, Privileges.CanUpdateRoles)).Wait();
+                        roleManager.AddClaimAsync(adminRole,
+                            new Claim(GenericProperties.Privilege, Privileges.CanDeleteRoles)).Wait();
+                        
+                        roleManager.AddClaimAsync(adminRole,
+                            new Claim(GenericProperties.Privilege, Privileges.CanCreateUsers)).Wait();
                         roleManager.AddClaimAsync(adminRole,
                             new Claim(GenericProperties.Privilege, Privileges.CanViewUsers)).Wait();
+                        roleManager.AddClaimAsync(adminRole,
+                            new Claim(GenericProperties.Privilege, Privileges.CanUpdateUsers)).Wait();
+                        roleManager.AddClaimAsync(adminRole,
+                            new Claim(GenericProperties.Privilege, Privileges.CanDeleteUsers)).Wait();
+
+                        roleManager.AddClaimAsync(adminRole,
+                            new Claim(GenericProperties.Privilege, Privileges.CanCreateSettings)).Wait();
+                        roleManager.AddClaimAsync(adminRole,
+                            new Claim(GenericProperties.Privilege, Privileges.CanViewSettings)).Wait();
+                        roleManager.AddClaimAsync(adminRole,
+                            new Claim(GenericProperties.Privilege, Privileges.CanUpdateSettings)).Wait();
+                        roleManager.AddClaimAsync(adminRole,
+                            new Claim(GenericProperties.Privilege, Privileges.CanDeleteSettings)).Wait();
                     }
                 }
                 #endregion
@@ -49,13 +66,14 @@ namespace NetCoreStarter.Web.Models
                 {
                     OtherNames = "System",
                     Surname = "Administrator",
-                    UserName = "Admin"
+                    UserName = "Admin",
+                    
                 };
                 var existingUser = userManager.FindByNameAsync("Admin").Result;
                 //Admin User
                 if (existingUser == null)
                 {
-                    var res = userManager.CreateAsync(adminUser, "admin@app");
+                    var res = userManager.CreateAsync(adminUser, "Admin@app1");
                     if (res.Result.Succeeded)
                     {
                         var user = userManager.FindByNameAsync("Admin").Result;
