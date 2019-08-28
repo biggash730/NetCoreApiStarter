@@ -21,10 +21,10 @@ namespace NetCoreStarter.Services
                 await scheduler.Start();
 
                 var messageService = JobBuilder.Create<MessageProcessService>()
-                    .WithIdentity("job1", "group1")
+                    .WithIdentity("net_core_starter_job_1", "net_core_starter_group_1")
                     .Build();
                 var msgTrigger = TriggerBuilder.Create()
-                    .WithIdentity("trigger1", "group1")
+                    .WithIdentity("net_core_starter_trigger_1", "net_core_starter_group_1")
                         .StartNow()
                         .WithSimpleSchedule(x => x
                             .WithIntervalInSeconds(5)
