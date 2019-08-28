@@ -57,7 +57,8 @@ namespace NetCoreStarter.Web.Controllers
         {
             try
             {
-                _repository.Update(SetAudit(model));
+                var rec = SetAudit(model);
+                _repository.Update(rec);
                 return Ok($"{_klassName} Updated Successful");
             }
             catch (Exception ex)
@@ -74,7 +75,8 @@ namespace NetCoreStarter.Web.Controllers
         {
             try
             {
-                _repository.Insert(SetAudit(model,true));
+                var rec = SetAudit(model, true);
+                _repository.Insert(rec);
                 return Created("", $"{_klassName} Saved Successful");
             }
             catch (Exception ex)
@@ -106,14 +108,15 @@ namespace NetCoreStarter.Web.Controllers
         #region Set Audit
         protected T SetAudit(T record, bool isNew = false)
         {
+            var user = User.Identity.AsAppUser(_context).Result;
             if (isNew)
             {
                 if (typeof(T).GetProperty(GenericProperties.CreatedBy) != null)
-                    typeof(T).GetProperty(GenericProperties.CreatedBy).SetValue(record, User.Identity.Name);
+                    typeof(T).GetProperty(GenericProperties.CreatedBy).SetValue(record, user.UserName);
             }
 
             if (typeof(T).GetProperty(GenericProperties.ModifiedBy) != null)
-                typeof(T).GetProperty(GenericProperties.ModifiedBy).SetValue(record, User.Identity.Name);
+                typeof(T).GetProperty(GenericProperties.ModifiedBy).SetValue(record, user.UserName);
 
             return record;
         }

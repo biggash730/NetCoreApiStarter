@@ -10,6 +10,10 @@ using NetCoreStarter.Shared.Classes;
 using NetCoreStarter.Services;
 using NetCoreStarter.Web.Models;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace NetCoreStarter.Web
 {
@@ -56,9 +60,7 @@ namespace NetCoreStarter.Web
                                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+?!@#$%^&*";
                             options.User.RequireUniqueEmail = false;
                         });
-            services.AddCors();
-
-            
+            services.AddCors();            
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -66,6 +68,29 @@ namespace NetCoreStarter.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Net Core Starter", Version = "v1" });
+            });
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+
+            services
+              .AddAuthentication(options =>
+              {
+                  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                  options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+              })
+            .AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["Tokens:Issuer"],
+                    ValidAudience = Configuration["Tokens:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                    ClockSkew = TimeSpan.Zero // remove delay of token when expire
+      };
             });
         }
 

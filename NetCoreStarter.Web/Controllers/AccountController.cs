@@ -1,11 +1,15 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using NetCoreStarter.Shared.Classes;
 using NetCoreStarter.Utils;
 using NetCoreStarter.Utils.Helpers;
@@ -23,63 +27,79 @@ namespace NetCoreStarter.Web.Controllers
         private readonly RoleManager<Role> roleManager;
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<User> signInManager;
+        private readonly IConfiguration configuration;
 
-        public AccountController(IServiceProvider serviceProvider)
+        public AccountController(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             userManager = serviceProvider.GetService<UserManager<User>>();
             roleManager = serviceProvider.GetService<RoleManager<Role>>();
             _context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>());
             signInManager = serviceProvider.GetService<SignInManager<User>>();
+            this.configuration = configuration;
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<ActionResult> Login(LoginModel model)
-        //{
-        //    try
-        //    {
-        //        if (!ModelState.IsValid) throw new Exception("Please check the login details");
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("login")]
+        public async Task<ActionResult> Login(LoginModel model)
+        {
+            try
+            {
+                var user = await userManager.FindByNameAsync(model.Username);
 
-        //        var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe);
-        //        if(result.S)
+                if (user != null)
+                {
+                    var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, model.RememberMe);
 
-        //        if (user == null) throw new Exception("Invalid Username or Password");
+                    if (result.Succeeded)
+                    {
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Tokens:Key"]));
+                        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var nowUtc = DateTime.Now.ToUniversalTime();
+                        var expires = nowUtc.AddMinutes(double.Parse(configuration["Tokens:ExpiryMinutes"])).ToUniversalTime();
 
-        //        var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-        //        authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-        //        var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-        //        authenticationManager.SignIn(new AuthenticationProperties { IsPersistent = model.RememberMe }, identity);
+                        var token = new JwtSecurityToken(
+                        configuration["Tokens:Issuer"],
+                        configuration["Tokens:Audience"],
+                        null,
+                        expires: expires,
+                        signingCredentials: creds);
 
-        //        var ticket = new AuthenticationTicket(identity, new AuthenticationProperties());
-        //        var token = Startup.OAuthOptions.AccessTokenFormat.Protect(ticket);
+                        var tokenResponse = new JwtSecurityTokenHandler().WriteToken(token);
 
-        //        var data = new
-        //        {
-        //            user.Id,
-        //            Username = user.UserName,
-        //            user.Name,
-        //            user.Email,
-        //            user.PhoneNumber,
-        //            Role = new
-        //            {
-        //                user.Profile.Id,
-        //                user.Profile.Name,
-        //                Privileges = user.Profile.Privileges.Split(',')
-        //            },
-        //            token
-        //        };
+                        user = _context.Users.Where(x => x.Id == user.Id).Include(x => x.UserRoles).Include(x => x.Claims).First();
+                        var role = _context.Roles.Where(x=> x.Id == user.UserRoles.First().RoleId).Include(x=> x.RoleClaims).First();
 
-        //        return Ok(new
-        //        {
-        //            data,
-        //            message = "Login Successful"
-        //        });
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(WebHelpers.ProcessException(e));
-        //    }
-        //}
+                        var data = new
+                        {
+                            user.Id,
+                            Username = user.UserName,
+                            user.OtherNames,
+                            user.Surname,
+                            user.Email,
+                            user.PhoneNumber,
+                            Role = role.Name,
+                            Claims = role.RoleClaims.Select(x=> x.ClaimValue).Distinct().ToList(),
+                            Token = tokenResponse
+                        };
+
+                        return Ok(new
+                        {
+                            data,
+                            message = "Login Successful"
+                        });
+                    }
+
+                    return BadRequest();
+                }
+
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(WebHelpers.ProcessException(e));
+            }
+        }
 
 
         [HttpGet]
@@ -88,8 +108,7 @@ namespace NetCoreStarter.Web.Controllers
         {            
             try
             {
-                //var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-                //authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                await signInManager.SignOutAsync();
                 return Ok("User Logged Out");
             }
             catch (Exception ex)
@@ -262,6 +281,7 @@ namespace NetCoreStarter.Web.Controllers
         {
             try
             {
+                if (model == null) throw new Exception("Please check the data entered");
                 var userId = User.Identity.AsAppUser(_context).Result.Id;
                 var db = _context;
                 var user = db.Users.FirstOrDefault(x => x.Id == userId);
