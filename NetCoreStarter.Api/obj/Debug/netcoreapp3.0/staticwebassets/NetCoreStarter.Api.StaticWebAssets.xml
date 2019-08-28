@@ -1,4 +1,0 @@
-﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/Identity" Path="C:\Users\Francis\.nuget\packages\microsoft.aspnetcore.identity.ui\3.0.0-preview8.19405.7\staticwebassets\V4" />
-  <ContentRoot BasePath="_content/NetCoreStarter.Web" Path="C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\wwwroot\" />
-</StaticWebAssets>
