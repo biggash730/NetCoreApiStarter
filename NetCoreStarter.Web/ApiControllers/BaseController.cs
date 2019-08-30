@@ -75,9 +75,8 @@ namespace NetCoreStarter.Web.ApiControllers
         {
             try
             {
-                var rec = SetAudit(model, true);
-                _repository.Insert(rec);
-                return Created("", $"{_klassName} Saved Successful");
+                _repository.Insert(SetAudit(model, true));
+                return Created($"Create{_klassName}", new { Message = $"{_klassName} Saved Successful" });
             }
             catch (Exception ex)
             {

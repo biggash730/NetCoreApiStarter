@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace NetCoreStarter.Utils
+namespace NMCPrepApi.Utils
 {
     public class Validators
     {
