@@ -224,12 +224,12 @@ namespace NetCoreStarter.Web.ApiControllers
         {
             try
             {
-                var data = _context.Roles.Where(x=> !x.IsDeleted).Include(x=> x.RoleClaims).ToList().Select(x=> new Role
+                var data = _context.Roles.Where(x => !x.IsDeleted).Include(x => x.RoleClaims).ToList().Select(x => new Role
                 {
                     Id = x.Id,
                     Name = x.Name,
                     NormalizedName = x.NormalizedName,
-                    Claims = x.RoleClaims.Select(c=> c.ClaimValue).ToList()
+                    Claims = x.RoleClaims.Select(c => c.ClaimValue).ToList()
                 }).ToList();
                 return Ok(data);
             }
@@ -240,7 +240,7 @@ namespace NetCoreStarter.Web.ApiControllers
         }
 
         [HttpGet]
-        [Route("GetRole")]
+        [Route("GetRole/{id}")]
         public async Task<ActionResult> GetRole(string id)
         {
             try
@@ -266,8 +266,100 @@ namespace NetCoreStarter.Web.ApiControllers
         {
             try
             {
-                new RoleRepository(_context).Insert(model);
-                return Created("","Role Created Successfully");
+                model.NormalizedName = model.Name;
+                var claims = model.Claims;
+                var existingRole = _context.Roles.FirstOrDefault(x => x.Name == model.Name);
+                if (existingRole == null)
+                {
+                    var res = roleManager.CreateAsync(model);
+                    if (res.Result.Succeeded)
+                    {
+                        //var role = _context.Roles.First(x => x.Name == model.Name);
+                        foreach (var c in claims)
+                        {
+                            roleManager.AddClaimAsync(model,
+                        new Claim(GenericProperties.Privilege, c)).Wait();
+                        }
+                    }
+                }
+                else
+                {
+                    return BadRequest("There is an existing role with the same name. Consider updating the role.");
+                }
+                _context.SaveChanges();
+                return Created("CreateRole", new { model.Id, Message = "Role has been created successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(WebHelpers.ProcessException(ex));
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateRole")]
+        public async Task<ActionResult> UpdateRole(Role model)
+        {
+            try
+            {
+                _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                var claims = model.Claims;
+                var role = _context.Roles.FirstOrDefault(x => x.Id == model.Id);
+                if (role != null)
+                {
+                    var roleClaims = _context.RoleClaims.Where(x => x.RoleId == model.Id);
+                    _context.RoleClaims.RemoveRange(roleClaims);
+                    _context.SaveChanges();
+
+
+                    foreach (var c in claims)
+                    {
+                        _context.RoleClaims.Add(new RoleClaim
+                        {
+                            ClaimType = GenericProperties.Privilege,
+                            ClaimValue = c,
+                            RoleId = model.Id
+                        });
+                    }
+
+                    role.Name = model.Name;
+                    role.NormalizedName = model.Name;
+                    role.UpdatedAt = DateTime.Now.ToUniversalTime();
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    return NotFound("Please check the role id.");
+                }
+                _context.SaveChanges();
+                return Created("UpdateRole", new { model.Id, Message = "Role has been updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(WebHelpers.ProcessException(ex));
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteRole/{id}")]
+        public async Task<ActionResult> DeleteRole(string id)
+        {
+            try
+            {
+                _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+                var role = _context.Roles.FirstOrDefault(x => x.Id == id);
+                if (role != null)
+                {
+                    var roleClaims = _context.RoleClaims.Where(x => x.RoleId == id);
+                    _context.RoleClaims.RemoveRange(roleClaims);
+
+                    _context.Roles.Remove(role);
+                }
+                else
+                {
+                    return NotFound("Please check the role id.");
+                }
+                _context.SaveChanges();
+                return Ok(new { Message = "Role Deleted Successful" });
             }
             catch (Exception ex)
             {
