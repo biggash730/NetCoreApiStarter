@@ -95,7 +95,7 @@ namespace NetCoreStarter.Web.ApiControllers
                 var res = _repository.Get(id);
                 if (res == null) return BadRequest($"Could not find the {_klassName}");
                 _repository.Delete(id);
-                return Ok("Deleted Successful");
+                return Ok(new { Message = $"{_klassName} Deleted Successful" });
             }
             catch (Exception ex)
             {
