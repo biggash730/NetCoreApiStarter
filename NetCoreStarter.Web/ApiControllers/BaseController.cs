@@ -59,7 +59,7 @@ namespace NetCoreStarter.Web.ApiControllers
             {
                 var rec = SetAudit(model);
                 _repository.Update(rec);
-                return Ok($"{_klassName} Updated Successful");
+                return Created($"Update{_klassName}", new { Message = $"{_klassName} Updated Successful" });
             }
             catch (Exception ex)
             {
