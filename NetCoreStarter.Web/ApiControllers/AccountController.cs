@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreStarter.Shared.Classes;
+using NetCoreStarter.Shared.Filters;
 using NetCoreStarter.Utils;
 using NetCoreStarter.Utils.Helpers;
 using NetCoreStarter.Web.Models;
@@ -53,22 +56,23 @@ namespace NetCoreStarter.Web.ApiControllers
 
                     if (result.Succeeded)
                     {
+                        user = _context.Users.Where(x => x.Id == user.Id).Include(x => x.UserRoles).Include(x => x.Claims).First();
+                        var role = _context.Roles.Where(x => x.Id == user.UserRoles.First().RoleId).Include(x => x.RoleClaims).First();
+                        var roleClaims = role.RoleClaims.Select(x => x.ClaimValue).Distinct().ToList();
+
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Tokens:Key"]));
                         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                         var nowUtc = DateTime.Now.ToUniversalTime();
                         var expires = nowUtc.AddMinutes(double.Parse(configuration["Tokens:ExpiryMinutes"])).ToUniversalTime();
 
+                        var claims = new List<Claim> { new Claim("Id", user.Id) };
                         var token = new JwtSecurityToken(
                         configuration["Tokens:Issuer"],
                         configuration["Tokens:Audience"],
-                        null,
+                        claims,
                         expires: expires,
                         signingCredentials: creds);
-
                         var tokenResponse = new JwtSecurityTokenHandler().WriteToken(token);
-
-                        user = _context.Users.Where(x => x.Id == user.Id).Include(x => x.UserRoles).Include(x => x.Claims).First();
-                        var role = _context.Roles.Where(x=> x.Id == user.UserRoles.First().RoleId).Include(x=> x.RoleClaims).First();
 
                         var data = new
                         {
@@ -79,7 +83,7 @@ namespace NetCoreStarter.Web.ApiControllers
                             user.Email,
                             user.PhoneNumber,
                             Role = role.Name,
-                            Claims = role.RoleClaims.Select(x=> x.ClaimValue).Distinct().ToList(),
+                            Claims = roleClaims,
                             Token = tokenResponse
                         };
 
@@ -90,10 +94,10 @@ namespace NetCoreStarter.Web.ApiControllers
                         });
                     }
 
-                    return BadRequest();
+                    return BadRequest("Invalid Username or Password");
                 }
 
-                return BadRequest();
+                return BadRequest("Invalid Username or Password");
             }
             catch (Exception e)
             {
@@ -105,11 +109,11 @@ namespace NetCoreStarter.Web.ApiControllers
         [HttpGet]
         [Route("Logout")]
         public async Task<ActionResult> Logout()
-        {            
+        {
             try
             {
                 await signInManager.SignOutAsync();
-                return Ok("User Logged Out");
+                return Ok(new { Message = "User Logged Out" });
             }
             catch (Exception ex)
             {
@@ -123,18 +127,24 @@ namespace NetCoreStarter.Web.ApiControllers
         {
             try
             {
+                var roleRepo = new RoleRepository(_context);
+                var role = roleRepo.GetByName(model.Role);
                 //todo: do validations
+                model.Id = Guid.NewGuid().ToString();
+                model.Locked = false;
                 var result = await userManager.CreateAsync(model, model.Password).ConfigureAwait(true);
 
                 if (result.Succeeded)
                 {
                     var user = userManager.FindByNameAsync(model.UserName).Result;
-                    var rslt = userManager.AddToRoleAsync(user, model.Role);
+                    //Add to role
+                    roleRepo.AddToRole(user.Id, role.Name);
+                    //var rslt = userManager.AddToRoleAsync(user, model.Role);
                 }
-                else 
+                else
                     return BadRequest(WebHelpers.ProcessException(result));
-                
-                return Created("","User has been created Successfully");
+
+                return Created("CreateUser", new { model.Id, Message = "User has been created Successfully" });
             }
             catch (Exception ex)
             {
@@ -153,12 +163,13 @@ namespace NetCoreStarter.Web.ApiControllers
                 var role = roleRepo.GetByName(model.Role);
 
                 if (user == null) return NotFound("Updating user not found. Please update an existing user");
-                
+
                 user.OtherNames = model.OtherNames;
                 user.OtherNames = model.OtherNames;
                 user.UpdatedAt = DateTime.Now.ToUniversalTime();
                 user.PhoneNumber = model.PhoneNumber;
                 user.Email = model.Email;
+                //user.Locked = false;
                 new UserRepository(_context).Update(user);
 
                 //Remove old role
@@ -167,7 +178,7 @@ namespace NetCoreStarter.Web.ApiControllers
                 //Add to role
                 roleRepo.AddToRole(user.Id, role.Name);
 
-                return Ok("User Updated Successfully");
+                return Created("UpdateUser", new { user.Id, Message = "User has been updated successfully" });
             }
             catch (Exception ex)
             {
@@ -177,23 +188,66 @@ namespace NetCoreStarter.Web.ApiControllers
 
         [HttpGet]
         [Route("GetUsers")]
-        [AllowAnonymous]
         public async Task<ActionResult> GetUsers()
         {
             try
             {
-                var res = _context.Users.Include(x=> x.UserRoles).ToList();
+                var res = _context.Users.Include(x => x.UserRoles).ToList();
                 var data = res.Select(x => new
-                    {
-                        x.Id,
-                        x.OtherNames,
-                        x.Surname,
-                        x.Email,
-                        x.PhoneNumber,
-                        x.UserName,
-                        Role = new RoleRepository(_context).GetById(x.UserRoles.First().RoleId)?.Name,
-                    }).ToList();
+                {
+                    x.Id,
+                    x.OtherNames,
+                    x.Surname,
+                    x.Email,
+                    x.PhoneNumber,
+                    x.UserName,
+                    Role = new RoleRepository(_context).GetById(x.UserRoles.FirstOrDefault()?.RoleId)?.Name,
+                }).OrderBy(x => x.Surname).ToList();
                 return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(WebHelpers.ProcessException(ex));
+            }
+        }
+
+        [HttpPost]
+        [Route("QueryUsers")]
+        public async Task<ActionResult> QueryUsers(UserFilter filter)
+        {
+            try
+            {
+                var res = filter.BuildQuery(_context.Users).Include(x => x.UserRoles).ToList();
+                var total = res.Count();
+                if (filter.Pager.Page > 0)
+                    res = res.Skip(filter.Pager.Skip()).Take(filter.Pager.Size).ToList();
+                if (!res.Any()) return NotFound(new { Message = "No User Found" });
+                var data = res.Select(x => new
+                {
+                    x.Id,
+                    x.OtherNames,
+                    x.Surname,
+                    x.Email,
+                    x.PhoneNumber,
+                    x.UserName,
+                    Role = new RoleRepository(_context).GetById(x.UserRoles.First().RoleId)?.Name,
+                }).ToList();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(WebHelpers.ProcessException(ex));
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteUser")]
+        public async Task<ActionResult> DeleteUser(string id)
+        {
+            try
+            {
+                new UserRepository(_context).Delete(id);
+                return Ok(new { Message = "User Deleted Successfully." });
             }
             catch (Exception ex)
             {
@@ -230,7 +284,7 @@ namespace NetCoreStarter.Web.ApiControllers
                     Name = x.Name,
                     NormalizedName = x.NormalizedName,
                     Claims = x.RoleClaims.Select(c => c.ClaimValue).ToList()
-                }).ToList();
+                }).OrderBy(x => x.Name).ToList();
                 return Ok(data);
             }
             catch (Exception ex)
@@ -340,7 +394,7 @@ namespace NetCoreStarter.Web.ApiControllers
         }
 
         [HttpDelete]
-        [Route("DeleteRole/{id}")]
+        [Route("DeleteRole")]
         public async Task<ActionResult> DeleteRole(string id)
         {
             try
@@ -368,15 +422,15 @@ namespace NetCoreStarter.Web.ApiControllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("UpdateProfile")]
         public async Task<ActionResult> UpdateProfile(User model)
         {
             try
             {
-                if (model == null) throw new Exception("Please check the data entered");
-                var userId = User.Identity.AsAppUser(_context).Result.Id;
+                var uId = User.FindFirst("Id")?.Value;
                 var db = _context;
-                var user = db.Users.FirstOrDefault(x => x.Id == userId);
+                var user = db.Users.FirstOrDefault(x => x.Id == uId);
                 if (user == null) throw new Exception("Could not find user");
 
                 user.OtherNames = model.OtherNames;
@@ -386,23 +440,8 @@ namespace NetCoreStarter.Web.ApiControllers
                 user.Email = model.Email;
                 db.SaveChanges();
 
-                return Ok("Profile Updated successfully");
+                return Created("UpdateProfile", new { model.Id, Message = "Profile has been updated successfully" });
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(WebHelpers.ProcessException(ex));
-            }
-        }
-        
-        [HttpDelete]
-        [Route("DeleteUser")]
-        public async Task<ActionResult> DeleteUser(string id)
-        {
-            try
-            {
-                new UserRepository(_context).Delete(id);
-                return Ok("User Deleted Successfully.");
             }
             catch (Exception ex)
             {
@@ -417,12 +456,14 @@ namespace NetCoreStarter.Web.ApiControllers
         {
             try
             {
-                var user = User.Identity.AsAppUser(_context).Result;
+                var uId = User.FindFirst("Id")?.Value;
+                var db = _context;
+                var user = db.Users.AsNoTracking().FirstOrDefault(x => x.Id == uId);
                 var result = await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
 
                 if (!result.Succeeded) return BadRequest(WebHelpers.ProcessException(result));
 
-                return Ok("Password changed sucessfully.");
+                return Ok(new { Message = "Password changed sucessfully." });
             }
             catch (Exception ex)
             {
@@ -445,9 +486,9 @@ namespace NetCoreStarter.Web.ApiControllers
                     if (!res.Succeeded) return BadRequest(WebHelpers.ProcessException(res));
                 }
                 else return BadRequest(WebHelpers.ProcessException(result));
-                
-                        _context.SaveChanges();
-                return Ok("Password Reset Successful");
+
+                _context.SaveChanges();
+                return Ok(new { Message = "Password Reset Successful" });
             }
             catch (Exception e)
             {
@@ -456,5 +497,5 @@ namespace NetCoreStarter.Web.ApiControllers
         }
     }
 
-    
+
 }
