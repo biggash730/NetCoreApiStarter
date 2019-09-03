@@ -30,7 +30,9 @@ namespace NetCoreStarter.Web
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseLazyLoadingProxies()
+                .UseSqlServer(connection));
 
             // configure token generation
             services.AddIdentity<User, Role>()

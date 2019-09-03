@@ -150,8 +150,6 @@ C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarte
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.csprojAssemblyReference.cache
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\staticwebassets\NetCoreStarter.Web.StaticWebAssets.Manifest.cache
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\staticwebassets\NetCoreStarter.Web.StaticWebAssets.xml
-C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.RazorAssemblyInfo.cache
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.RazorAssemblyInfo.cs
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.AssemblyInfoInputs.cache

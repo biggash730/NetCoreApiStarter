@@ -110,11 +110,11 @@ namespace NetCoreStarter.Web.ApiControllers
             if (isNew)
             {
                 if (typeof(T).GetProperty(GenericProperties.CreatedBy) != null)
-                    typeof(T).GetProperty(GenericProperties.CreatedBy).SetValue(record, "uName");
+                    typeof(T).GetProperty(GenericProperties.CreatedBy).SetValue(record, uName);
             }
 
             if (typeof(T).GetProperty(GenericProperties.ModifiedBy) != null)
-                typeof(T).GetProperty(GenericProperties.ModifiedBy).SetValue(record, "uName");
+                typeof(T).GetProperty(GenericProperties.ModifiedBy).SetValue(record, uName);
 
             return record;
         }
