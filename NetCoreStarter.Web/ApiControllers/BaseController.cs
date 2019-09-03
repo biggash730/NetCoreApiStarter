@@ -30,11 +30,11 @@ namespace NetCoreStarter.Web.ApiControllers
         #region snippet_Get
         // GET: api/model
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public virtual async Task<ActionResult> Get()
         {
             var res = _repository.Get();
-            if (!res.Any()) return Ok("No data found");
-            if (res == null) return NotFound($"Could not find any {_klassName}");
+            if (!res.Any()) return Ok(new { Message = "No Data Found" });
+            if (res == null) return NotFound(new { Message = $"Could not find any {_klassName}" });
             return Ok(res);
         }
         #endregion
@@ -42,23 +42,22 @@ namespace NetCoreStarter.Web.ApiControllers
         #region snippet_GetByID
         // GET: api/model/5
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(long id)
+        public virtual async Task<ActionResult> Get(long id)
         {
             var res = _repository.Get(id);
-            if (res == null) return NotFound($"Could not find any {_klassName}");
+            if (res == null) return NotFound(new { Message = $"Could not find any {_klassName}" });
             return Ok(res);
         }
         #endregion
 
         #region snippet_Update
-        // PUT: api/model/5
+        // PUT: api/model
         [HttpPut]
-        public async Task<ActionResult> Put(T model)
+        public virtual async Task<ActionResult> Put(T model)
         {
             try
             {
-                var rec = SetAudit(model);
-                _repository.Update(rec);
+                _repository.Update(SetAudit(model));
                 return Created($"Update{_klassName}", new { Message = $"{_klassName} Updated Successful" });
             }
             catch (Exception ex)
@@ -71,7 +70,7 @@ namespace NetCoreStarter.Web.ApiControllers
         #region snippet_Create
         // POST: api/model
         [HttpPost]
-        public async Task<ActionResult> Post(T model)
+        public virtual async Task<ActionResult> Post(T model)
         {
             try
             {
@@ -88,12 +87,12 @@ namespace NetCoreStarter.Web.ApiControllers
         #region snippet_Delete
         // DELETE: api/model/5
         [HttpDelete]
-        public async Task<ActionResult> Delete(long id)
+        public virtual async Task<ActionResult> Delete(long id)
         {
             try
             {
                 var res = _repository.Get(id);
-                if (res == null) return BadRequest($"Could not find the {_klassName}");
+                if (res == null) return NotFound($"Could not find the {_klassName}");
                 _repository.Delete(id);
                 return Ok(new { Message = $"{_klassName} Deleted Successful" });
             }
@@ -107,15 +106,15 @@ namespace NetCoreStarter.Web.ApiControllers
         #region Set Audit
         protected T SetAudit(T record, bool isNew = false)
         {
-            var user = User.Identity.AsAppUser(_context).Result;
+            var uName = User.FindFirst("UserName")?.Value;
             if (isNew)
             {
                 if (typeof(T).GetProperty(GenericProperties.CreatedBy) != null)
-                    typeof(T).GetProperty(GenericProperties.CreatedBy).SetValue(record, user.UserName);
+                    typeof(T).GetProperty(GenericProperties.CreatedBy).SetValue(record, "uName");
             }
 
             if (typeof(T).GetProperty(GenericProperties.ModifiedBy) != null)
-                typeof(T).GetProperty(GenericProperties.ModifiedBy).SetValue(record, user.UserName);
+                typeof(T).GetProperty(GenericProperties.ModifiedBy).SetValue(record, "uName");
 
             return record;
         }

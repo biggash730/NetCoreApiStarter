@@ -11,9 +11,9 @@ namespace NetCoreStarter.Shared.Classes
 
     public class AuditFields : HasId
     {
-        [Required]
+        //[Required]
         public string CreatedBy { get; set; }
-        [Required]
+        //[Required]
         public string ModifiedBy { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
