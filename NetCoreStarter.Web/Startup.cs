@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace NetCoreStarter.Web
 {
@@ -94,6 +95,12 @@ namespace NetCoreStarter.Web
                     ClockSkew = TimeSpan.Zero // remove delay of token when expire
       };
             });
+
+            services.AddMvc()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

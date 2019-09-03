@@ -171,3 +171,7 @@ C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarte
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.csproj.CopyComplete
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.dll
 C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.pdb
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\bin\Debug\netcoreapp3.0\Castle.Core.dll
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\bin\Debug\netcoreapp3.0\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Francis\iCloudDrive\Projects\6One\Starters\NetCoreStarter\NetCoreStarter.Web\obj\Debug\netcoreapp3.0\NetCoreStarter.Web.MvcApplicationPartsAssemblyInfo.cache

@@ -30,6 +30,7 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.0.0-preview8.19405.7",
           "Microsoft.AspNetCore.Identity.UI": "3.0.0-preview8.19405.7",
           "Microsoft.CodeAnalysis.FxCopAnalyzers": "2.9.4",
+          "Microsoft.EntityFrameworkCore.Proxies": "3.0.0-preview8.19405.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.0.0-preview8.19405.11",
           "Microsoft.EntityFrameworkCore.Tools": "3.0.0-preview8.19405.11",
           "Microsoft.Extensions.Logging.Debug": "3.0.0-preview8.19405.4",
@@ -196,7 +197,7 @@
           "System.Diagnostics.StackTrace": "4.1.1.0",
           "System.Diagnostics.TextWriterTraceListener": "4.1.1.0",
           "System.Diagnostics.Tools.Reference": "4.1.1.0",
-          "System.Diagnostics.TraceSource": "4.1.1.0",
+          "System.Diagnostics.TraceSource.Reference": "4.1.1.0",
           "System.Diagnostics.Tracing.Reference": "4.2.1.0",
           "System": "4.0.0.0",
           "System.Drawing": "4.0.0.0",
@@ -338,6 +339,29 @@
         },
         "compile": {
           "lib/Antlr3.Runtime.dll": {}
+        }
+      },
+      "Castle.Core/4.2.1": {
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "System.Collections.Specialized": "4.3.0",
+          "System.ComponentModel": "4.3.0",
+          "System.ComponentModel.TypeConverter": "4.3.0",
+          "System.Diagnostics.TraceSource": "4.3.0",
+          "System.Dynamic.Runtime": "4.3.0",
+          "System.Reflection": "4.3.0",
+          "System.Reflection.Emit": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.5.0",
+          "System.Xml.XmlDocument": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Castle.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.2.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Castle.Core.dll": {}
         }
       },
       "EntityFramework/6.2.0": {
@@ -1101,6 +1125,21 @@
         },
         "compile": {
           "lib/netstandard2.1/Microsoft.EntityFrameworkCore.Design.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Proxies/3.0.0-preview8.19405.11": {
+        "dependencies": {
+          "Castle.Core": "4.2.1",
+          "Microsoft.EntityFrameworkCore": "3.0.0-preview8.19405.11"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.EntityFrameworkCore.Proxies.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.19.40511"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/Microsoft.EntityFrameworkCore.Proxies.dll": {}
         }
       },
       "Microsoft.EntityFrameworkCore.Relational/3.0.0-preview8.19405.11": {
@@ -2116,6 +2155,19 @@
           "Microsoft.NETCore.Platforms": "2.1.2",
           "Microsoft.NETCore.Targets": "1.1.0",
           "System.Runtime": "4.3.0"
+        }
+      },
+      "System.Diagnostics.TraceSource/4.3.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "2.1.2",
+          "System.Collections": "4.3.0",
+          "System.Diagnostics.Debug": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "runtime.native.System": "4.3.0"
         }
       },
       "System.Diagnostics.Tracing/4.3.0": {
@@ -3798,7 +3850,7 @@
         },
         "compileOnly": true
       },
-      "System.Diagnostics.TraceSource/4.1.1.0": {
+      "System.Diagnostics.TraceSource.Reference/4.1.1.0": {
         "compile": {
           "System.Diagnostics.TraceSource.dll": {}
         },
@@ -4563,6 +4615,13 @@
       "path": "antlr/3.4.1.9004",
       "hashPath": "antlr.3.4.1.9004.nupkg.sha512"
     },
+    "Castle.Core/4.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XSNA0Gc1Zu33L+8+/3Tqt+aFu8QWS8UenVHZ7RenIP5wJfhoLrA4PnNscpxReeo5aBq8PDoGnV8rNaOzIOUo/w==",
+      "path": "castle.core/4.2.1",
+      "hashPath": "castle.core.4.2.1.nupkg.sha512"
+    },
     "EntityFramework/6.2.0": {
       "type": "package",
       "serviceable": true,
@@ -4947,6 +5006,13 @@
       "sha512": "sha512-XVS3XDJHMSM74D+5wd87G/RL+5OsWVWaCC+k3v5jZLkAO+IcDFOZfC1ubZTCG6GOBEygCus9uWVOw55g0pbGvw==",
       "path": "microsoft.entityframeworkcore.design/3.0.0-preview8.19405.11",
       "hashPath": "microsoft.entityframeworkcore.design.3.0.0-preview8.19405.11.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Proxies/3.0.0-preview8.19405.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EkYxtMgffOHd0BmxMwro0WNssYSZcVG58RqjzHn+x+Piyf2AdHJewlSYih+hawqnj8xvOd7aOMyxnvoi30QhVA==",
+      "path": "microsoft.entityframeworkcore.proxies/3.0.0-preview8.19405.11",
+      "hashPath": "microsoft.entityframeworkcore.proxies.3.0.0-preview8.19405.11.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Relational/3.0.0-preview8.19405.11": {
       "type": "package",
@@ -5647,6 +5713,13 @@
       "sha512": "sha512-UUvkJfSYJMM6x527dJg2VyWPSRqIVB0Z7dbjHst1zmwTXz5CcXSYJFWRpuigfbO1Lf7yfZiIaEUesfnl/g5EyA==",
       "path": "system.diagnostics.tools/4.3.0",
       "hashPath": "system.diagnostics.tools.4.3.0.nupkg.sha512"
+    },
+    "System.Diagnostics.TraceSource/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VnYp1NxGx8Ww731y2LJ1vpfb/DKVNKEZ8Jsh5SgQTZREL/YpWRArgh9pI8CDLmgHspZmLL697CaLvH85qQpRiw==",
+      "path": "system.diagnostics.tracesource/4.3.0",
+      "hashPath": "system.diagnostics.tracesource.4.3.0.nupkg.sha512"
     },
     "System.Diagnostics.Tracing/4.3.0": {
       "type": "package",
@@ -6912,7 +6985,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Diagnostics.TraceSource/4.1.1.0": {
+    "System.Diagnostics.TraceSource.Reference/4.1.1.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
