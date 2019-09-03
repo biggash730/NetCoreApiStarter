@@ -65,7 +65,7 @@ namespace NetCoreStarter.Web.ApiControllers
                         var nowUtc = DateTime.Now.ToUniversalTime();
                         var expires = nowUtc.AddMinutes(double.Parse(configuration["Tokens:ExpiryMinutes"])).ToUniversalTime();
 
-                        var claims = new List<Claim> { new Claim("Id", user.Id) };
+                        var claims = new List<Claim> { new Claim("Id", user.Id), new Claim("UserName", user.UserName) };
                         var token = new JwtSecurityToken(
                         configuration["Tokens:Issuer"],
                         configuration["Tokens:Audience"],
