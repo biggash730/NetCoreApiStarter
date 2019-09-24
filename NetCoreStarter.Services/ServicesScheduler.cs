@@ -1,5 +1,6 @@
 ﻿using Quartz;
 using Quartz.Impl;
+using System;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 
@@ -7,7 +8,7 @@ namespace NetCoreStarter.Services
 {
     public class ServicesScheduler
     {
-        public static async Task StartAsync()
+        public static async Task StartAsync(IServiceProvider serviceProvider)
         {
             try
             {
@@ -18,6 +19,7 @@ namespace NetCoreStarter.Services
                 };
                 StdSchedulerFactory factory = new StdSchedulerFactory(props);
                 IScheduler scheduler = await factory.GetScheduler();
+                scheduler.JobFactory = new SystemJobFactory(serviceProvider);
                 await scheduler.Start();
 
                 var messageService = JobBuilder.Create<MessageProcessService>()

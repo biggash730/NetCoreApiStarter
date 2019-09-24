@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace NetCoreStarter.Web
 {
@@ -50,7 +51,7 @@ namespace NetCoreStarter.Web
                                 RequireUppercase = bool.Parse(Configuration.GetSection("PasswordPolicies:RequireUppercase").Value),
                                 RequireNonAlphanumeric = bool.Parse(Configuration.GetSection("PasswordPolicies:RequireNonLetterOrDigit").Value),
                                 RequiredUniqueChars = int.Parse(Configuration.GetSection("PasswordPolicies:RequiredUniqueChars").Value),
-                                
+
                             };
 
                             // Lockout settings.
@@ -63,7 +64,8 @@ namespace NetCoreStarter.Web
                                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+?!@#$%^&*";
                             options.User.RequireUniqueEmail = false;
                         });
-            services.AddCors();            
+            services.AddCors();
+            services.AddAuthorization();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -93,7 +95,7 @@ namespace NetCoreStarter.Web
                     ValidAudience = Configuration["Tokens:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
                     ClockSkew = TimeSpan.Zero // remove delay of token when expire
-      };
+                };
             });
 
             services.AddMvc()
@@ -101,13 +103,15 @@ namespace NetCoreStarter.Web
     {
         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
     });
+            //Register the service processors
+            services.AddScoped<MessageProcessService>();
+            var serviceProvider = services.BuildServiceProvider();
+            ServicesScheduler.StartAsync(serviceProvider).GetAwaiter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //Start Background Services
-            ServicesScheduler.StartAsync().GetAwaiter();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -119,19 +123,24 @@ namespace NetCoreStarter.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            //app.UseIdentity();
-            app.UseCors();
-                //.AllowAnyOrigin()
-                //.AllowCredentials()
-                //.AllowAnyMethod()
-                //.AllowAnyHeader());
             app.UseHttpsRedirection();
+            app.Use(async (context, next) => {
+                await next();
+                if (context.Response.StatusCode == 404 &&
+                   !Path.HasExtension(context.Request.Path.Value) &&
+                   !context.Request.Path.Value.StartsWith("/api/"))
+                {
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });
+            app.UseDefaultFiles();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
+            //app.UseMvcWithDefaultRoute();
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -143,6 +152,7 @@ namespace NetCoreStarter.Web
             });
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapHub<ChatHub>("/chat");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
