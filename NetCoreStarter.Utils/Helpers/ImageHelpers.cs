@@ -1,8 +1,12 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Text.RegularExpressions;
 
-namespace NetCoreStarter.Utils.Helpers
+namespace NetCoreStarter.Utils
 {
     public class ImageHelpers
     {
@@ -31,6 +35,51 @@ namespace NetCoreStarter.Utils.Helpers
             if (!res.Success) throw new Exception("Could not upload image to imgur. Try again!!");
 
             return res.Data.Link;
+        }
+
+        public static byte[] GetImageBytesFromDataUrl(string dataUrl)
+        {
+            var base64String = Regex.Match(dataUrl, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            return Convert.FromBase64String(base64String);
+        }
+
+        public static Image GetImageFromDataUrl(string dataUrl)
+        {
+            var base64Data = Regex.Match(dataUrl, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
+            return GetImageFromBase64(base64Data);
+        }
+
+        public static string CompressedImage(string picture)
+        {
+            var image = GetImageFromDataUrl(picture);
+            var thumb = image.GetThumbnailImage(image.Width, image.Height, null, IntPtr.Zero);
+            //todo: check the datatype
+            //var dataType = picture.Substring(',');
+            var dataType = picture.Split(',')[0];
+            return $"{dataType},{ImageToBase64(thumb)}";
+        }
+
+        public static Image GetImageFromBase64(string base64String)
+        {
+            var imageBytes = Convert.FromBase64String(base64String);
+            Image image;
+            using (var ms = new MemoryStream(imageBytes))
+            {
+                image = Image.FromStream(ms);
+            }
+            return image;
+        }
+
+        public static string ImageToBase64(Image image)
+        {
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, ImageFormat.Jpeg);
+                var imageBytes = ms.ToArray();
+
+                var base64String = Convert.ToBase64String(imageBytes);
+                return base64String;
+            }
         }
     }
 

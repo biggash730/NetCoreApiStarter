@@ -1,4 +1,4 @@
-﻿namespace NetCoreStarter.Utils.Helpers
+﻿namespace NetCoreStarter.Utils
 {
     public static class MessageHelpers
     {

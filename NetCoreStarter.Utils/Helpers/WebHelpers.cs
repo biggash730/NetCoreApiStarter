@@ -2,13 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 
-namespace NetCoreStarter.Utils.Helpers
+namespace NetCoreStarter.Utils
 {
     public class WebHelpers
     {
@@ -32,18 +30,18 @@ namespace NetCoreStarter.Utils.Helpers
         /// <returns></returns>
         private static string ErrorMsg(Exception exception)
         {
-            var validationException = exception as DbEntityValidationException;
-            if (validationException != null)
-            {
-                var lines = validationException.EntityValidationErrors.Select(
-                    x => new
-                    {
-                        name = x.Entry.Entity.GetType().Name.Split('_')[0],
-                        errors = x.ValidationErrors.Select(y => y.PropertyName + ":" + y.ErrorMessage)
-                    })
-                                               .Select(x => $"{x.name} => {string.Join(",", x.errors)}");
-                return string.Join("\r\n", lines);
-            }
+            //var validationException = exception as DbEntityValidationException;
+            //if (validationException != null)
+            //{
+            //    var lines = validationException.EntityValidationErrors.Select(
+            //        x => new
+            //        {
+            //            name = x.Entry.Entity.GetType().Name.Split('_')[0],
+            //            errors = x.ValidationErrors.Select(y => y.PropertyName + ":" + y.ErrorMessage)
+            //        })
+            //                                   .Select(x => $"{x.name} => {string.Join(",", x.errors)}");
+            //    return string.Join("\r\n", lines);
+            //}
 
             var updateException = exception as DbUpdateException;
             if (updateException != null)
@@ -123,9 +121,15 @@ namespace NetCoreStarter.Utils.Helpers
         /// <returns></returns>
         public static string ProcessException(IdentityResult identityResult)
         {
-            var msg = identityResult.Errors.Aggregate("", (current, error) => current + error + "\n");
+            var msg = identityResult.Errors.Aggregate("", (current, error) => current + error.Description + "\n");
             return msg;
         }
     }
 
+    public class RecaptchaResponse
+    {
+        public bool Success { get; set; }
+        public DateTime ChallengeTs { get; set; }
+        public string Hostname { get; set; }
+    }
 }

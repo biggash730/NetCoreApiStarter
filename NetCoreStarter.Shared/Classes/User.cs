@@ -27,4 +27,6 @@ namespace NetCoreStarter.Shared.Classes
         public string Role { get; set; }
     }
 
+    
+
 }

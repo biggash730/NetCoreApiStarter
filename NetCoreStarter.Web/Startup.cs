@@ -103,7 +103,7 @@ namespace NetCoreStarter.Web
     {
         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
     });
-            //Register the service processors
+            ///Start Background Services
             services.AddScoped<MessageProcessService>();
             var serviceProvider = services.BuildServiceProvider();
             ServicesScheduler.StartAsync(serviceProvider).GetAwaiter();

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NetCoreStarter.Utils.Helpers
+namespace NetCoreStarter.Utils
 {
     public class InfobipHelpers
     {

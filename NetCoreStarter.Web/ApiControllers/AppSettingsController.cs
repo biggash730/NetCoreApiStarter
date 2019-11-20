@@ -2,7 +2,6 @@
 using NetCoreStarter.Shared.Classes;
 using NetCoreStarter.Shared.Filters;
 using NetCoreStarter.Utils;
-using NetCoreStarter.Utils.Helpers;
 using NetCoreStarter.Web.Models;
 using System;
 using System.Linq;

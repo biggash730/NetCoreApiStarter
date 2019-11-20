@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetCoreStarter.Utils.Helpers
+namespace NetCoreStarter.Utils
 {
     public class DateHelpers
     {
