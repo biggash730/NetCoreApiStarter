@@ -24,6 +24,7 @@
         //permissions on systems configuration
         public const string CanViewDashboard = "CanViewDashboard";
         public const string CanViewReports = "CanViewReports";
+        public const string CanViewAdministration = "CanViewAdministration";
 
     }
 

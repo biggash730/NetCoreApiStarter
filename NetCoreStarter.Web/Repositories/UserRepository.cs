@@ -22,8 +22,7 @@ namespace NetCoreStarter.Web.Repositories
         {
             var theUser = DbSet.Find(entity.Id);
             if (theUser == null) throw new Exception("User not found to update.");
-            theUser.Surname = entity.Surname;
-            theUser.OtherNames = entity.OtherNames;
+            theUser.Name = entity.Name;
             theUser.Email = entity.Email;
             theUser.PhoneNumber = entity.PhoneNumber;
             theUser.Email = entity.Email;

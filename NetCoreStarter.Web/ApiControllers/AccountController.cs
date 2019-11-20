@@ -77,8 +77,7 @@ namespace NetCoreStarter.Web.ApiControllers
                         {
                             user.Id,
                             Username = user.UserName,
-                            user.OtherNames,
-                            user.Surname,
+                            user.Name,
                             user.Email,
                             user.PhoneNumber,
                             Role = role.Name,
@@ -163,8 +162,7 @@ namespace NetCoreStarter.Web.ApiControllers
 
                 if (user == null) return NotFound("Updating user not found. Please update an existing user");
 
-                user.OtherNames = model.OtherNames;
-                user.OtherNames = model.OtherNames;
+                user.Name = model.Name;
                 user.UpdatedAt = DateTime.Now.ToUniversalTime();
                 user.PhoneNumber = model.PhoneNumber;
                 user.Email = model.Email;
@@ -195,13 +193,12 @@ namespace NetCoreStarter.Web.ApiControllers
                 var data = res.Select(x => new
                 {
                     x.Id,
-                    x.OtherNames,
-                    x.Surname,
+                    x.Name,
                     x.Email,
                     x.PhoneNumber,
                     x.UserName,
                     Role = new RoleRepository(_context).GetById(x.UserRoles.FirstOrDefault()?.RoleId)?.Name,
-                }).OrderBy(x => x.Surname).ToList();
+                }).OrderBy(x => x.Name).ToList();
                 return Ok(data);
             }
             catch (Exception ex)
@@ -224,8 +221,7 @@ namespace NetCoreStarter.Web.ApiControllers
                 var data = res.Select(x => new
                 {
                     x.Id,
-                    x.OtherNames,
-                    x.Surname,
+                    x.Name,
                     x.Email,
                     x.PhoneNumber,
                     x.UserName,
@@ -432,8 +428,7 @@ namespace NetCoreStarter.Web.ApiControllers
                 var user = db.Users.FirstOrDefault(x => x.Id == uId);
                 if (user == null) throw new Exception("Could not find user");
 
-                user.OtherNames = model.OtherNames;
-                user.Surname = model.Surname;
+                user.Name = model.Name;
                 user.UpdatedAt = DateTime.UtcNow;
                 user.PhoneNumber = model.PhoneNumber;
                 user.Email = model.Email;

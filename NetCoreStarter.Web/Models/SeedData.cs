@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using NetCoreStarter.Shared.Classes;
 using NetCoreStarter.Utils;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -19,44 +21,47 @@ namespace NetCoreStarter.Web.Models
                 serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
             {
                 #region Roles
-                var adminRole = new Role { Name = "Administrator", NormalizedName = "Administrator" };
-                var existingRole = context.Roles.FindAsync(adminRole.Name).Result;
+                var adminClaims = new List<string>
+                        {
+                            Privileges.CanViewDashboard,
+                            Privileges.CanViewAdministration,
+                            Privileges.CanViewSettings,
+                            Privileges.CanViewReports,
+                            Privileges.CanViewRoles,
+                            Privileges.CanCreateRoles,
+                            Privileges.CanUpdateRoles,
+                            Privileges.CanDeleteRoles,
+                            Privileges.CanViewUsers,
+                            Privileges.CanCreateUsers,
+                            Privileges.CanUpdateUsers,
+                            Privileges.CanDeleteUsers,
+                            Privileges.CanCreateSettings,
+                            Privileges.CanUpdateSettings,
+                            Privileges.CanDeleteSettings
+                };
+                var adminRole = new Role { Name = "Administrator", NormalizedName = "Administrator", Locked = true};
+                var existingRole = context.Roles.FirstOrDefault(x => x.Name == adminRole.Name);
                 if (existingRole == null)
                 {
                     var res = roleManager.CreateAsync(adminRole);
                     if (res.Result.Succeeded)
                     {
-                        roleManager.AddClaimAsync(adminRole,
-                        new Claim(GenericProperties.Privilege, Privileges.CanViewDashboard)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewReports)).Wait();
-                        
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanCreateRoles)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewRoles)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanUpdateRoles)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanDeleteRoles)).Wait();
-                        
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanCreateUsers)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewUsers)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanUpdateUsers)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanDeleteUsers)).Wait();
-
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanCreateSettings)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanViewSettings)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanUpdateSettings)).Wait();
-                        roleManager.AddClaimAsync(adminRole,
-                            new Claim(GenericProperties.Privilege, Privileges.CanDeleteSettings)).Wait();
+                        adminClaims.Distinct().ToList().ForEach(r => roleManager.AddClaimAsync(adminRole,
+                        new Claim(GenericProperties.Privilege, r)).Wait());
+                    }
+                }
+                else
+                {
+                    foreach (var r in adminClaims)
+                    {
+                        var exst = context.RoleClaims.FirstOrDefault(x => x.RoleId == existingRole.Id && r == x.ClaimValue);
+                        if (exst == null)
+                        {
+                            var newClaim = new RoleClaim { RoleId = existingRole.Id, ClaimValue = r, ClaimType = GenericProperties.Privilege };
+                            context.RoleClaims.Add(newClaim);
+                            context.SaveChanges();
+                            var a = newClaim;
+                        }
                     }
                 }
                 #endregion
@@ -64,10 +69,8 @@ namespace NetCoreStarter.Web.Models
                 #region Users
                 var adminUser = new User
                 {
-                    OtherNames = "System",
-                    Surname = "Administrator",
-                    UserName = "Admin",
-                    
+                    Name = "System Administrator",
+                    UserName = "Admin"
                 };
                 var existingUser = userManager.FindByNameAsync("Admin").Result;
                 //Admin User
