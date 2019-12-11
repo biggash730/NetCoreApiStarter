@@ -104,7 +104,7 @@ namespace NetCoreStarter.Web
         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
     });
             ///Start Background Services
-            services.AddScoped<MessageProcessService>();
+            services.AddSingleton<MessageProcessService>();
             var serviceProvider = services.BuildServiceProvider();
             ServicesScheduler.StartAsync(serviceProvider).GetAwaiter();
         }
