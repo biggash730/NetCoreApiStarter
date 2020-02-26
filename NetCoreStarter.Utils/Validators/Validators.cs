@@ -2,7 +2,7 @@
 
 namespace NMCPrepApi.Utils
 {
-    public class Validators
+    public static class Validators
     {
         public static bool IsValidEmail(string email)
         {

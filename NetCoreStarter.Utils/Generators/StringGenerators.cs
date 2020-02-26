@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NetCoreStarter.Utils
 {
-    public class StringGenerators
+    public static class StringGenerators
     {
         private static readonly Random Random = new Random();
 

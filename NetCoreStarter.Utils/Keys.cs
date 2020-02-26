@@ -1,6 +1,6 @@
 ﻿namespace NetCoreStarter.Utils
 {
-    public class Privileges
+    public static class Privileges
     {
         //Permissions on the User Model
         public const string CanCreateUsers = "CanCreateUsers";
@@ -28,7 +28,7 @@
 
     }
 
-    public class GenericProperties
+    public static class GenericProperties
     {
         public const string Administrator = "Administrator";
         public const string Privilege = "Privilege";
@@ -40,7 +40,7 @@
         public const string IsDeleted = "IsDeleted";
     }
 
-    public class ExceptionMessage
+    public static class ExceptionMessage
     {
         public const string RecordLocked = "Record is locked and can't be deleted.";
         public const string NotFound = "Record not found.";

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetCoreStarter.Services
 {
-    public class ServicesScheduler
+    public static class ServicesScheduler
     {
         public static async Task StartAsync(IServiceProvider serviceProvider)
         {
